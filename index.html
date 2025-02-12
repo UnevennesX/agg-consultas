@@ -6,57 +6,89 @@
     <title>Administración de Surveys</title>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
     <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600&display=swap" rel="stylesheet">
+   
+   
+   
+   
+   
+   
+   
+   
+   
     <style>
-        /* Reset básico */
         *, *::before, *::after {
             margin: 0;
             padding: 0;
             box-sizing: border-box;
         }
-
+        
         :root {
-            --primary-color: #3498db; /* Azul principal */
-            --secondary-color: #2c3e50; /* Gris oscuro */
-            --light-color: #ecf0f1; /* Gris claro */
-            --text-color: #333; /* Texto general */
-            --success-color: #27ae60; /* Verde */
-            --danger-color: #e74c3c; /* Rojo */
-            --warning-color: #f39c12; /* Amarillo */
+            --primary-color: #1a1a1a; /* Fondo oscuro principal */
+            --secondary-color: #2d2d2d; /* Fondo secundario */
+            --light-color: #ffffff; /* Blanco puro */
+            --text-color: #e0e0e0; /* Gris claro para el texto */
+            --success-color: #4caf50; /* Verde suave */
+            --danger-color: #f44336; /* Rojo suave */
+            --warning-color: #ff9800; /* Naranja suave */
             --border-radius: 8px; /* Bordes redondeados */
-            --shadow: 0 2px 4px rgba(0, 0, 0, 0.1); /* Sombra suave */
-            --transition: all 0.3s ease-in-out; /* Transiciones suaves */
-            --form-bg-color: #f9f9f9; /* Color de fondo del formulario */
-            --form-border-color: #ddd; /* Color del borde del formulario */
+            --shadow: 0 4px 8px rgba(0, 0, 0, 0.3);
+            --transition: all 0.3s ease-in-out;
+            --form-bg-color: #2d2d2d; /* Fondo del formulario */
+            --form-border-color: #444; /* Borde del formulario */
+            --highlight-color: #64b5f6; /* Azul claro para resaltar */
+            --accent-color: #2196f3; /* Azul brillante para acentos */
+            --hover-shadow: 0 6px 12px rgba(0, 0, 0, 0.4); /* Sombra al pasar el cursor */
         }
-
+        
         body {
-            font-family: 'Poppins', sans-serif;
-            background-color: var(--light-color);
+            font-family: 'Roboto', sans-serif;
+            background-color: var(--primary-color);
             color: var(--text-color);
             line-height: 1.6;
             display: flex;
             flex-direction: column;
             min-height: 100vh;
+            overflow-x: hidden;
         }
-
+        
         /* Header */
         .header {
-            background-color: var(--primary-color);
-            color: white;
+            background-color: var(--secondary-color);
+            color: var(--light-color);
             padding: 1.5rem 2rem;
             text-align: center;
             box-shadow: var(--shadow);
             display: flex;
             justify-content: space-between;
             align-items: center;
+            position: relative;
+            overflow: hidden;
+            border-radius: var(--border-radius);
         }
-
+        
+        .header::after {
+            content: '';
+            position: absolute;
+            bottom: 0;
+            left: 50%;
+            transform: translateX(-50%);
+            width: 0;
+            height: 4px; /* Línea decorativa */
+            background-color: var(--accent-color);
+            transition: width 0.5s ease-in-out;
+        }
+        
+        .header:hover::after {
+            width: 100%;
+        }
+        
         .header h1 {
-            font-size: 2rem;
+            font-size: 2.4rem;
             font-weight: 500;
-            margin-bottom: 0.5rem;
+            margin-bottom: 0;
+            letter-spacing: 0.5px;
         }
-
+        
         /* Container */
         .container {
             display: flex;
@@ -65,230 +97,308 @@
             border-radius: var(--border-radius);
             overflow: hidden;
             box-shadow: var(--shadow);
+            background-color: var(--secondary-color);
         }
-
+        
         /* Sidebar */
         .sidebar {
-            width: 250px;
+            width: 300px;
             background-color: var(--secondary-color);
-            color: var(--light-color);
-            padding: 1.5rem;
+            color: var(--text-color);
+            padding: 2rem;
+            display: flex;
+            flex-direction: column;
+            border-radius: var(--border-radius);
         }
-
+        
         .sidebar h2 {
-            font-size: 1.2rem;
-            margin-bottom: 1rem;
+            font-size: 1.4rem;
+            margin-bottom: 1.5rem;
             text-transform: uppercase;
             letter-spacing: 1px;
+            color: var(--light-color);
+            font-weight: 500;
         }
-
+        
         .sidebar ul {
             list-style: none;
             padding: 0;
+            flex: 1;
         }
-
+        
         .sidebar li {
-            margin-bottom: 0.8rem;
+            margin-bottom: 1.2rem;
         }
-
+        
         .sidebar a {
-            color: var(--light-color);
+            color: var(--text-color);
             text-decoration: none;
             display: flex;
             align-items: center;
-            padding: 0.5rem;
+            padding: 0.8rem;
             border-radius: var(--border-radius);
             transition: var(--transition);
+            position: relative;
+            overflow: hidden;
         }
-
+        
+        .sidebar a::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 6px;
+            height: 100%;
+            background-color: var(--accent-color);
+            transform: scaleY(0);
+            transition: transform 0.3s ease-in-out;
+            transform-origin: top;
+        }
+        
+        .sidebar a:hover::before {
+            transform: scaleY(1);
+        }
+        
         .sidebar a:hover {
-            background-color: rgba(255, 255, 255, 0.1);
+            background-color: rgba(255, 255, 255, 0.05);
+            color: var(--light-color);
+            box-shadow: var(--hover-shadow);
         }
-
+        
         .sidebar a i {
-            margin-right: 0.5rem;
-            width: 20px;
+            margin-right: 1rem;
+            width: 24px;
             text-align: center;
+            font-size: 1.2rem;
         }
-
+        
         /* Main Content */
         .main-content {
             flex: 1;
             padding: 2rem;
-            background-color: white;
+            background-color: var(--form-bg-color);
+            color: var(--text-color);
+            border-radius: 0 var(--border-radius) var(--border-radius) 0;
+            box-shadow: var(--shadow);
         }
-
+        
         /* Add Survey Button */
         #add-survey-btn {
-            background-color: var(--success-color);
-            color: white;
-            padding: 0.75rem 1.25rem;
+            background-color: var(--accent-color);
+            color: var(--light-color);
+            padding: 1rem 1.75rem;
             border: none;
             border-radius: var(--border-radius);
             cursor: pointer;
-            font-size: 1rem;
+            font-size: 1.2rem;
             transition: var(--transition);
             box-shadow: var(--shadow);
+            outline: none;
+            position: relative;
+            overflow: hidden;
+            font-weight: 600;
         }
-
+        
+        #add-survey-btn::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background-color: rgba(0, 0, 0, 0.1);
+            opacity: 0;
+            transition: opacity 0.3s ease-in-out;
+        }
+        
+        #add-survey-btn:hover::before {
+            opacity: 1;
+        }
+        
         #add-survey-btn:hover {
-            background-color: #219653;
+            transform: translateY(-3px);
+            box-shadow: var(--hover-shadow);
         }
-
+        
         /* Add Survey Form */
         #add-survey-form {
-            display: none; /* Oculto inicialmente */
+            display: none;
             margin-top: 2rem;
-            padding: 1.5rem;
+            padding: 2rem;
             background-color: var(--form-bg-color);
             border-radius: var(--border-radius);
             box-shadow: var(--shadow);
         }
-
+        
         #add-survey-form.active {
-            display: block; /* Visible cuando está activo */
+            display: block;
         }
-
+        
         #add-survey-form label {
             display: block;
-            margin-bottom: 0.5rem;
+            margin-bottom: 0.7rem;
             font-weight: 500;
+            color: var(--light-color);
+            font-size: 1.1rem;
         }
-
+        
         #add-survey-form input[type="text"],
         #add-survey-form select,
         #add-survey-form input[type="datetime-local"],
         #add-survey-form textarea {
             width: 100%;
-            padding: 0.75rem;
-            margin-bottom: 1rem;
+            padding: 1.2rem;
+            margin-bottom: 1.5rem;
             border: 1px solid var(--form-border-color);
             border-radius: var(--border-radius);
             transition: var(--transition);
             outline: none;
-            background-color: white; /* Fondo blanco para los inputs */
+            background-color: #3a3a3a;
+            color: var(--text-color);
+            font-size: 1.1rem;
         }
-
+        
         #add-survey-form input[type="text"]:focus,
         #add-survey-form select:focus,
         #add-survey-form input[type="datetime-local"]:focus,
         #add-survey-form textarea:focus {
-            border-color: var(--primary-color);
+            border-color: var(--highlight-color);
+            box-shadow: 0 0 8px rgba(100, 181, 246, 0.7);
         }
-
+        
         #add-survey-form textarea {
             resize: vertical;
-            min-height: 100px;
+            min-height: 150px;
         }
-
+        
         /* Estilos para los botones del formulario */
         #add-survey-form button[type="button"] {
-            background-color: var(--primary-color);
-            color: white;
+            background-color: var(--accent-color);
+            color: var(--light-color);
             border: none;
-            padding: 0.75rem 1rem;
+            padding: 1rem 1.5rem;
             border-radius: var(--border-radius);
             cursor: pointer;
             transition: var(--transition);
-            margin-top: 1rem;
+            margin-top: 1.5rem;
+            box-shadow: var(--shadow);
+            outline: none;
+            font-size: 1.1rem;
+            font-weight: 600;
+            margin-top: auto;
         }
-
+        
         #add-survey-form button[type="button"]:hover {
-            background-color: #2980b9;
+            background-color: var(--highlight-color);
+            transform: translateY(-2px);
+            box-shadow: var(--hover-shadow);
         }
-
+        
         /* Survey Table */
         #survey-table-container {
-            display: block; /* Visible por defecto */
+            display: block;
         }
-
+        
         #survey-table-container.hidden {
             display: none;
         }
-
+        
         #survey-table {
             width: 100%;
             border-collapse: collapse;
             margin-top: 2rem;
+            border-radius: var(--border-radius);
+            overflow: hidden;
+            box-shadow: var(--shadow);
         }
-
+        
         #survey-table th, #survey-table td {
-            padding: 1rem;
-            border: 1px solid #ddd;
+            padding: 1.4rem;
+            border: 1px solid #444;
             text-align: left;
         }
-
+        
         #survey-table th {
-            background-color: var(--light-color);
+            background-color: #444;
             font-weight: 500;
+            color: var(--light-color);
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
         }
-
+        
+        #survey-table td {
+            color: var(--text-color);
+        }
+        
         .action-buttons {
             text-align: center;
         }
-
+        
         .action-buttons button {
             background-color: transparent;
             border: none;
             cursor: pointer;
             margin: 0 0.5rem;
-            padding: 0.5rem;
+            padding: 0.8rem;
             border-radius: var(--border-radius);
             transition: var(--transition);
+            outline: none;
         }
-
+        
         .action-buttons button:hover {
-            background-color: rgba(0, 0, 0, 0.05);
+            background-color: rgba(255, 255, 255, 0.05);
+            box-shadow: var(--hover-shadow);
         }
-
+        
         .edit-btn {
             color: var(--warning-color);
         }
-
+        
         .delete-btn {
             color: var(--danger-color);
         }
-
+        
         /* Responsive */
         @media (max-width: 768px) {
             .container {
                 flex-direction: column;
                 margin: 1rem;
             }
-
+        
             .sidebar {
                 width: 100%;
-                padding: 1rem;
+                padding: 1.5rem;
             }
-
+        
             .header {
                 padding: 1rem;
             }
-
+        
             .header h1 {
-                font-size: 1.5rem;
+                font-size: 1.8rem;
             }
-
+        
             .main-content {
+                padding: 1.5rem;
+                border-radius: 0 0 var(--border-radius) 0;
+            }
+        
+            #add-survey-btn {
+                font-size: 1rem;
+                padding: 0.7rem 1.2rem;
+            }
+        
+            #survey-table th, #survey-table td {
                 padding: 1rem;
             }
-
-            #add-survey-btn {
-                font-size: 0.9rem;
-                padding: 0.6rem 1rem;
-            }
-
-            #survey-table th, #survey-table td {
-                padding: 0.75rem;
-            }
         }
-
+        
         /* Estilos para las notificaciones */
         .notification {
             position: fixed;
             top: 20px;
-            left: 50%; /* Centrar horizontalmente */
-            transform: translateX(-50%); /* Ajustar para centrar correctamente */
+            left: 50%;
+            transform: translateX(-50%);
             padding: 1rem 1.5rem;
             border-radius: var(--border-radius);
             box-shadow: var(--shadow);
@@ -296,56 +406,66 @@
             opacity: 0;
             transition: opacity 0.3s ease-in-out, transform 0.3s ease-in-out;
             transform: translateY(-20px);
-            text-align: center; /* Centrar el texto dentro de la notificación */
+            text-align: center;
         }
-
+        
         .notification.show {
             opacity: 1;
             transform: translate(-50%, 0);
         }
-
+        
         .notification.success {
             background-color: var(--success-color);
-            color: white;
+            color: var(--light-color);
         }
-
+        
         .notification.error {
             background-color: var(--danger-color);
-            color: white;
+            color: var(--light-color);
         }
-
+        
         .error {
             color: var(--danger-color);
             margin-top: 0.5rem;
             display: block;
         }
-
+        
         /* Pagination Styles */
         .pagination {
             margin-top: 20px;
             text-align: center;
         }
-
+        
         .pagination a {
-            color: var(--primary-color);
-            padding: 8px 16px;
+            color: var(--accent-color);
+            padding: 1rem 1.5rem;
             text-decoration: none;
-            border: 1px solid #ddd;
+            border: 1px solid var(--form-border-color);
             margin: 0 4px;
             border-radius: var(--border-radius);
             transition: var(--transition);
+            display: inline-block;
         }
-
+        
         .pagination a.active {
-            background-color: var(--primary-color);
-            color: white;
-            border-color: var(--primary-color);
+            background-color: var(--accent-color);
+            color: var(--light-color);
+            border-color: var(--accent-color);
         }
-
+        
         .pagination a:hover:not(.active) {
-            background-color: #ddd;
+            background-color: var(--highlight-color);
+            color: var(--light-color);
+            box-shadow: var(--hover-shadow);
         }
-    </style>
+        </style>
+
+
+
+
+
+
+
 </head>
 <body>
     <div class="header">
@@ -400,7 +520,7 @@
                             <th>Tipo</th>
                             <th>Fecha</th>
                             <th>Comentario</th>
-                            <th>Acciones</th>
+
                         </tr>
                     </thead>
                     <tbody id="data-container">
@@ -567,9 +687,7 @@
                     <td>${survey['Tipo de Survey']}</td>
                     <td>${survey.Fecha || ''}</td>
                     <td style="max-width: 300px; overflow: hidden; text-overflow: ellipsis; white-space: nowrap;">${survey.Comentario || ''}</td>
-                    <td class="action-buttons">
-                        <button class="edit-btn" data-index="${index}" onclick="editSurvey(${index})"><i class="fas fa-edit"></i></button>
-                        <button class="delete-btn" data-index="${index}" onclick="deleteSurvey(${index})"><i class="fas fa-trash"></i></button>
+
                     </td>
                 `;
             });
@@ -703,7 +821,7 @@
 
             // Validate URL
             if (!isValidUrl(nombre)) {
-                document.getElementById('nombre-error').textContent = 'Por favor, introduce una URL válida.';
+                document.getElementById('nombre-error').textContent = '';
                 showNotification('Por favor, introduce una URL válida.', 'error');
                 return;
             }
@@ -747,7 +865,6 @@
         // Load surveys when loading the page
         loadSurveys();
     </script>
-<script>
-
-    // ... (código anterior sin cambios)
-</script>
+    
+    </body>
+</html>
