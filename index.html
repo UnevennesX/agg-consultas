@@ -4,7 +4,6 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Administración de Surveys</title>
-    <link rel="icon" type="image/png" href="https://cdn.dribbble.com/users/7549673/screenshots/17206704/media/1210a9d0ec8af427967e735935861eeb.png?resize=400x300&vertical=center" />
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
     <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600&display=swap" rel="stylesheet">
    
@@ -87,7 +86,7 @@
         
         /* Header */
         .header {
-            background-color: var(--secondary-color);
+            background-color: #262626;
             color: var(--light-color);
             padding: 1.5rem 2rem;
             text-align: center;
@@ -218,7 +217,7 @@
         
         /* Add Survey Button */
         #add-survey-btn {
-            background-color: var(--accent-color);
+            background-color: #4c5861;
             color: var(--light-color);
             padding: 1rem 1.75rem;
             border: none;
@@ -247,6 +246,7 @@
         
         #add-survey-btn:hover::before {
             opacity: 1;
+            
         }
         
         #add-survey-btn:hover {
@@ -307,7 +307,7 @@
         
         /* Estilos para los botones del formulario */
         #add-survey-form button[type="button"] {
-            background-color: var(--accent-color);
+            background-color: #4c5861;
             color: var(--light-color);
             border: none;
             padding: 1rem 1.5rem;
@@ -320,10 +320,11 @@
             font-size: 1.1rem;
             font-weight: 600;
             margin-top: auto;
+            margin-inline: 1px;
         }
         
         #add-survey-form button[type="button"]:hover {
-            background-color: var(--highlight-color);
+            background-color: #0b5544;
             transform: translateY(-2px);
             box-shadow: var(--hover-shadow);
         }
@@ -471,7 +472,7 @@
         }
         
         .pagination a {
-            color: var(--accent-color);
+            color: wheat;
             padding: 1rem 1.5rem;
             text-decoration: none;
             border: 1px solid var(--form-border-color);
@@ -482,9 +483,9 @@
         }
         
         .pagination a.active {
-            background-color: var(--accent-color);
+            background-color: #0b5544;
             color: var(--light-color);
-            border-color: var(--accent-color);
+            border-color: #0b5544;
         }
         
         .pagination a:hover:not(.active) {
@@ -503,12 +504,27 @@
 </head>
 <body>
     <div class="header">
-        <h1>Administración de Surveys</h1>
+        <img src="https://cdn.dribbble.com/users/7549673/screenshots/17206704/media/1210a9d0ec8af427967e735935861eeb.png?resize=70x60&vertical=center" alt="Description of the image">
+       
+        <img src="https://cdn.dribbble.com/users/7549673/screenshots/17206704/media/1210a9d0ec8af427967e735935861eeb.png?resize=70x60&vertical=center" alt="Description of the image">
+
+        <img src="https://cdn.dribbble.com/users/7549673/screenshots/17206704/media/1210a9d0ec8af427967e735935861eeb.png?resize=70x60&vertical=center" alt="Description of the image">
+
+        <img src="https://cdn.dribbble.com/users/7549673/screenshots/17206704/media/1210a9d0ec8af427967e735935861eeb.png?resize=70x60&vertical=center" alt="Description of the image">
+
+        <img src="https://cdn.dribbble.com/users/7549673/screenshots/17206704/media/1210a9d0ec8af427967e735935861eeb.png?resize=70x60&vertical=center" alt="Description of the image">
+
+        <img src="https://cdn.dribbble.com/users/7549673/screenshots/17206704/media/1210a9d0ec8af427967e735935861eeb.png?resize=70x60&vertical=center" alt="Description of the image">
+
+        <img src="https://cdn.dribbble.com/users/7549673/screenshots/17206704/media/1210a9d0ec8af427967e735935861eeb.png?resize=70x60&vertical=center" alt="Description of the image">
+
+
         <button id="add-survey-btn"><i class="fas fa-plus"></i> Nuevo Survey</button>
     </div>
 
     <div class="container">
         <div class="sidebar">
+            
             <h2><i class="fas fa-filter"></i> Filtros</h2>
             <ul>
                 <li><a href="#" data-filter="all"><i class="fas fa-list"></i> Todos</a></li>
@@ -945,12 +961,6 @@ addSurveyBtn.addEventListener('click', () => {
 
 
 
-
-
-
-
-
-
 <script>
 let searchTerm = '';
 
@@ -975,15 +985,6 @@ document.getElementById('search-input').addEventListener('input', (e) => {
 
 </script>
     
-
-
-
-
-
-
-
-
-
 
     </body>
 </html>
