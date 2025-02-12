@@ -1,0 +1,753 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Administración de Surveys</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600&display=swap" rel="stylesheet">
+    <style>
+        /* Reset básico */
+        *, *::before, *::after {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        :root {
+            --primary-color: #3498db; /* Azul principal */
+            --secondary-color: #2c3e50; /* Gris oscuro */
+            --light-color: #ecf0f1; /* Gris claro */
+            --text-color: #333; /* Texto general */
+            --success-color: #27ae60; /* Verde */
+            --danger-color: #e74c3c; /* Rojo */
+            --warning-color: #f39c12; /* Amarillo */
+            --border-radius: 8px; /* Bordes redondeados */
+            --shadow: 0 2px 4px rgba(0, 0, 0, 0.1); /* Sombra suave */
+            --transition: all 0.3s ease-in-out; /* Transiciones suaves */
+            --form-bg-color: #f9f9f9; /* Color de fondo del formulario */
+            --form-border-color: #ddd; /* Color del borde del formulario */
+        }
+
+        body {
+            font-family: 'Poppins', sans-serif;
+            background-color: var(--light-color);
+            color: var(--text-color);
+            line-height: 1.6;
+            display: flex;
+            flex-direction: column;
+            min-height: 100vh;
+        }
+
+        /* Header */
+        .header {
+            background-color: var(--primary-color);
+            color: white;
+            padding: 1.5rem 2rem;
+            text-align: center;
+            box-shadow: var(--shadow);
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .header h1 {
+            font-size: 2rem;
+            font-weight: 500;
+            margin-bottom: 0.5rem;
+        }
+
+        /* Container */
+        .container {
+            display: flex;
+            flex: 1;
+            margin: 2rem;
+            border-radius: var(--border-radius);
+            overflow: hidden;
+            box-shadow: var(--shadow);
+        }
+
+        /* Sidebar */
+        .sidebar {
+            width: 250px;
+            background-color: var(--secondary-color);
+            color: var(--light-color);
+            padding: 1.5rem;
+        }
+
+        .sidebar h2 {
+            font-size: 1.2rem;
+            margin-bottom: 1rem;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+        }
+
+        .sidebar ul {
+            list-style: none;
+            padding: 0;
+        }
+
+        .sidebar li {
+            margin-bottom: 0.8rem;
+        }
+
+        .sidebar a {
+            color: var(--light-color);
+            text-decoration: none;
+            display: flex;
+            align-items: center;
+            padding: 0.5rem;
+            border-radius: var(--border-radius);
+            transition: var(--transition);
+        }
+
+        .sidebar a:hover {
+            background-color: rgba(255, 255, 255, 0.1);
+        }
+
+        .sidebar a i {
+            margin-right: 0.5rem;
+            width: 20px;
+            text-align: center;
+        }
+
+        /* Main Content */
+        .main-content {
+            flex: 1;
+            padding: 2rem;
+            background-color: white;
+        }
+
+        /* Add Survey Button */
+        #add-survey-btn {
+            background-color: var(--success-color);
+            color: white;
+            padding: 0.75rem 1.25rem;
+            border: none;
+            border-radius: var(--border-radius);
+            cursor: pointer;
+            font-size: 1rem;
+            transition: var(--transition);
+            box-shadow: var(--shadow);
+        }
+
+        #add-survey-btn:hover {
+            background-color: #219653;
+        }
+
+        /* Add Survey Form */
+        #add-survey-form {
+            display: none; /* Oculto inicialmente */
+            margin-top: 2rem;
+            padding: 1.5rem;
+            background-color: var(--form-bg-color);
+            border-radius: var(--border-radius);
+            box-shadow: var(--shadow);
+        }
+
+        #add-survey-form.active {
+            display: block; /* Visible cuando está activo */
+        }
+
+        #add-survey-form label {
+            display: block;
+            margin-bottom: 0.5rem;
+            font-weight: 500;
+        }
+
+        #add-survey-form input[type="text"],
+        #add-survey-form select,
+        #add-survey-form input[type="datetime-local"],
+        #add-survey-form textarea {
+            width: 100%;
+            padding: 0.75rem;
+            margin-bottom: 1rem;
+            border: 1px solid var(--form-border-color);
+            border-radius: var(--border-radius);
+            transition: var(--transition);
+            outline: none;
+            background-color: white; /* Fondo blanco para los inputs */
+        }
+
+        #add-survey-form input[type="text"]:focus,
+        #add-survey-form select:focus,
+        #add-survey-form input[type="datetime-local"]:focus,
+        #add-survey-form textarea:focus {
+            border-color: var(--primary-color);
+        }
+
+        #add-survey-form textarea {
+            resize: vertical;
+            min-height: 100px;
+        }
+
+        /* Estilos para los botones del formulario */
+        #add-survey-form button[type="button"] {
+            background-color: var(--primary-color);
+            color: white;
+            border: none;
+            padding: 0.75rem 1rem;
+            border-radius: var(--border-radius);
+            cursor: pointer;
+            transition: var(--transition);
+            margin-top: 1rem;
+        }
+
+        #add-survey-form button[type="button"]:hover {
+            background-color: #2980b9;
+        }
+
+        /* Survey Table */
+        #survey-table-container {
+            display: block; /* Visible por defecto */
+        }
+
+        #survey-table-container.hidden {
+            display: none;
+        }
+
+        #survey-table {
+            width: 100%;
+            border-collapse: collapse;
+            margin-top: 2rem;
+        }
+
+        #survey-table th, #survey-table td {
+            padding: 1rem;
+            border: 1px solid #ddd;
+            text-align: left;
+        }
+
+        #survey-table th {
+            background-color: var(--light-color);
+            font-weight: 500;
+        }
+
+        .action-buttons {
+            text-align: center;
+        }
+
+        .action-buttons button {
+            background-color: transparent;
+            border: none;
+            cursor: pointer;
+            margin: 0 0.5rem;
+            padding: 0.5rem;
+            border-radius: var(--border-radius);
+            transition: var(--transition);
+        }
+
+        .action-buttons button:hover {
+            background-color: rgba(0, 0, 0, 0.05);
+        }
+
+        .edit-btn {
+            color: var(--warning-color);
+        }
+
+        .delete-btn {
+            color: var(--danger-color);
+        }
+
+        /* Responsive */
+        @media (max-width: 768px) {
+            .container {
+                flex-direction: column;
+                margin: 1rem;
+            }
+
+            .sidebar {
+                width: 100%;
+                padding: 1rem;
+            }
+
+            .header {
+                padding: 1rem;
+            }
+
+            .header h1 {
+                font-size: 1.5rem;
+            }
+
+            .main-content {
+                padding: 1rem;
+            }
+
+            #add-survey-btn {
+                font-size: 0.9rem;
+                padding: 0.6rem 1rem;
+            }
+
+            #survey-table th, #survey-table td {
+                padding: 0.75rem;
+            }
+        }
+
+        /* Estilos para las notificaciones */
+        .notification {
+            position: fixed;
+            top: 20px;
+            left: 50%; /* Centrar horizontalmente */
+            transform: translateX(-50%); /* Ajustar para centrar correctamente */
+            padding: 1rem 1.5rem;
+            border-radius: var(--border-radius);
+            box-shadow: var(--shadow);
+            z-index: 1000;
+            opacity: 0;
+            transition: opacity 0.3s ease-in-out, transform 0.3s ease-in-out;
+            transform: translateY(-20px);
+            text-align: center; /* Centrar el texto dentro de la notificación */
+        }
+
+        .notification.show {
+            opacity: 1;
+            transform: translate(-50%, 0);
+        }
+
+        .notification.success {
+            background-color: var(--success-color);
+            color: white;
+        }
+
+        .notification.error {
+            background-color: var(--danger-color);
+            color: white;
+        }
+
+        .error {
+            color: var(--danger-color);
+            margin-top: 0.5rem;
+            display: block;
+        }
+
+        /* Pagination Styles */
+        .pagination {
+            margin-top: 20px;
+            text-align: center;
+        }
+
+        .pagination a {
+            color: var(--primary-color);
+            padding: 8px 16px;
+            text-decoration: none;
+            border: 1px solid #ddd;
+            margin: 0 4px;
+            border-radius: var(--border-radius);
+            transition: var(--transition);
+        }
+
+        .pagination a.active {
+            background-color: var(--primary-color);
+            color: white;
+            border-color: var(--primary-color);
+        }
+
+        .pagination a:hover:not(.active) {
+            background-color: #ddd;
+        }
+    </style>
+</head>
+<body>
+    <div class="header">
+        <h1>Administración de Surveys</h1>
+        <button id="add-survey-btn"><i class="fas fa-plus"></i> Nuevo Survey</button>
+    </div>
+
+    <div class="container">
+        <div class="sidebar">
+            <h2><i class="fas fa-filter"></i> Filtros</h2>
+            <ul>
+                <li><a href="#" data-filter="all"><i class="fas fa-list"></i> Todos</a></li>
+                <li><a href="#" data-filter="Samplicious"><i class="fas fa-check"></i> Samplicious</a></li>
+                <li><a href="#" data-filter="Spectrum"><i class="fas fa-chart-bar"></i> Spectrum</a></li>
+                <li><a href="#" data-filter="Sample-Cube"><i class="fas fa-cube"></i> Sample-Cube</a></li>
+            </ul>
+        </div>
+
+        <div class="main-content">
+            <form id="add-survey-form">
+                <label for="nombre">Nombre del survey (URL):</label>
+                <input type="text" id="nombre" name="nombre" required>
+                <span id="nombre-error" class="error"></span>
+
+                <label for="tipo">Tipo de Survey:</label>
+                <select id="tipo" name="tipo" required>
+                    <option value="Samplicious">Samplicious</option>
+                    <option value="Spectrum">Spectrum</option>
+                    <option value="Sample-Cube">Sample-Cube</option>
+                </select>
+                <span id="tipo-error" class="error"></span>
+
+                <label for="fecha">Fecha:</label>
+                <input type="datetime-local" id="fecha" name="fecha" required>
+                <span id="fecha-error" class="error"></span>
+
+                <label for="comentario">Comentarios:</label>
+                <textarea id="comentario" name="comentario" required></textarea>
+                <span id="comentario-error" class="error"></span>
+
+                <button type="button" id="export-btn">Exportar a TXT</button>
+                <button type="button" id="cancel-btn">Cancelar</button>
+
+            </form>
+            <div id="notification-container"></div>
+
+            <div id="survey-table-container">
+                <table id="survey-table">
+                    <thead>
+                        <tr>
+                            <th>Nombre</th>
+                            <th>Tipo</th>
+                            <th>Fecha</th>
+                            <th>Comentario</th>
+                            <th>Acciones</th>
+                        </tr>
+                    </thead>
+                    <tbody id="data-container">
+                        <!-- Datos dinámicos -->
+                    </tbody>
+                </table>
+            </div>
+
+            <div class="pagination" id="pagination-container">
+                <!-- Paginator links -->
+            </div>
+        </div>
+    </div>
+
+    <script>
+        // JavaScript
+        const addSurveyBtn = document.getElementById('add-survey-btn');
+        const addSurveyForm = document.getElementById('add-survey-form');
+        const cancelBtn = document.getElementById('cancel-btn');
+        const surveyTableContainer = document.getElementById('survey-table-container');
+        const surveyTable = document.getElementById('survey-table').querySelector('tbody');
+        const filterLinks = document.querySelectorAll('.sidebar a');
+        const notificationContainer = document.getElementById('notification-container');
+        const exportBtn = document.getElementById('export-btn');
+        const paginationContainer = document.getElementById('pagination-container');
+
+        let surveys = [];
+        let filteredSurveys = []; // Store filtered surveys
+        let editingIndex = -1;
+        const surveysPerPage = 10; // Number of surveys per page
+        let currentPage = 1;       // Current page number
+        let currentFilter = 'all'; // Current filter value
+
+        // Function to show notifications
+        function showNotification(message, type = 'success') {
+            const notification = document.createElement('div');
+            notification.classList.add('notification', type);
+            notification.textContent = message;
+            notificationContainer.appendChild(notification);
+
+            // Display the notification
+            setTimeout(() => {
+                notification.classList.add('show');
+            }, 10);
+
+            // Hide the notification after 3 seconds
+            setTimeout(() => {
+                notification.classList.remove('show');
+                setTimeout(() => {
+                    notificationContainer.removeChild(notification);
+                }, 300);
+            }, 3000);
+        }
+
+        // Function to load surveys from API
+        const loadSurveys = async () => {
+            try {
+                const response = await fetch('https://raw.githubusercontent.com/UnevennesX/consultas/main/info-consultas.txt');
+
+                if (!response.ok) {
+                    throw new Error(`Error al cargar los datos: Código de estado ${response.status}`);
+                }
+
+                const data = await response.text();
+                surveys = parseData(data);
+                filteredSurveys = [...surveys]; // Initialize filteredSurveys
+
+                // Format dates after loading data
+                surveys = surveys.map(survey => {
+                    if (survey.Fecha) {
+                        survey.Fecha = formatDateFromAPI(survey.Fecha);
+                    }
+                    return survey;
+                });
+
+                filterSurveys(currentFilter); // Apply current filter
+                showNotification('.txt cargado correctamente', 'success');
+            } catch (error) {
+                console.error('Error fetching data:', error);
+                showNotification(`Error al cargar los surveys: ${error.message}`, 'error');
+            }
+        };
+        // Function to parse the text data
+        function parseData(text) {
+            return text.split('----------------')
+                .filter(Boolean)
+                .map(block => {
+                    const obj = {};
+                    const lines = block.split('\n').map(line => line.trim());
+                    lines.forEach(line => {
+                        if (line.startsWith('Nombre:')) {
+                            obj.Nombre = line.substring(7).trim();
+                        } else if (line.startsWith('Tipo de Survey:')) {
+                            obj['Tipo de Survey'] = line.substring(16).trim();
+                        } else if (line.startsWith('Fecha:')) {
+                            obj.Fecha = line.substring(6).trim();
+                        } else if (line.startsWith('Comentario:')) {
+                            obj.Comentario = line.substring(11).trim();
+                        }
+                    });
+                    return obj;
+                })
+                .filter(survey => survey.Nombre && survey['Tipo de Survey'] && survey.Fecha);
+        }
+        // Function to format date from API
+        function formatDateFromAPI(dateString) {
+            if (!dateString) return '';
+
+            const months = {
+                'Enero': '01', 'Febrero': '02', 'Marzo': '03', 'Abril': '04',
+                'Mayo': '05', 'Junio': '06', 'Julio': '07', 'Agosto': '08',
+                'Septiembre': '09', 'Octubre': '10', 'Noviembre': '11', 'Diciembre': '12'
+            };
+
+            try {
+                const parts = dateString.split(/[.,\s]+/);
+                const day = parts[0].padStart(2, '0');
+                const monthName = parts[1];
+                const year = parts[2];
+                let time = parts[3] || '';
+                let ampm = parts[4] || '';
+
+                const month = months[monthName];
+
+                let hours = 0;
+                let minutes = '00';
+
+                if (time) {
+                    [hours, minutes] = time.split(':');
+                    hours = parseInt(hours);
+                }
+
+                if (ampm) {
+                    if (ampm.toUpperCase() === 'PM' && hours !== 12) {
+                        hours += 12;
+                    } else if (ampm.toUpperCase() === 'AM' && hours === 12) {
+                        hours = 0;
+                    }
+                }
+
+                hours = String(hours).padStart(2, '0');
+                minutes = String(minutes).padStart(2, '0');
+
+                return `${day}/${month}/${year} ${hours}:${minutes}`;
+            } catch (error) {
+                console.error("Error al formatear la fecha:", dateString, error);
+                return 'Fecha inválida';
+            }
+        }
+        // Function to get surveys for the current page
+         function getCurrentPageSurveys() {
+            const startIndex = (currentPage - 1) * surveysPerPage;
+            const endIndex = startIndex + surveysPerPage;
+            return filteredSurveys.slice(startIndex, endIndex);
+        }
+
+        // Function to render the table of surveys
+        const renderTable = (data) => {
+            surveyTable.innerHTML = ''; // Clear the table
+            data.forEach((survey, index) => {
+                const row = surveyTable.insertRow();
+                row.innerHTML = `
+                    <td style="max-width: 200px; overflow: hidden; text-overflow: ellipsis; white-space: nowrap;">${survey.Nombre}</td>
+                    <td>${survey['Tipo de Survey']}</td>
+                    <td>${survey.Fecha || ''}</td>
+                    <td style="max-width: 300px; overflow: hidden; text-overflow: ellipsis; white-space: nowrap;">${survey.Comentario || ''}</td>
+                    <td class="action-buttons">
+                        <button class="edit-btn" data-index="${index}" onclick="editSurvey(${index})"><i class="fas fa-edit"></i></button>
+                        <button class="delete-btn" data-index="${index}" onclick="deleteSurvey(${index})"><i class="fas fa-trash"></i></button>
+                    </td>
+                `;
+            });
+        };
+
+         // Function to render pagination links
+        function renderPagination() {
+             if (addSurveyForm.classList.contains('active')) {
+                 paginationContainer.innerHTML = ''; // Hide pagination when form is active
+                return;
+            }
+            const totalPages = Math.ceil(filteredSurveys.length / surveysPerPage);
+            let paginationHTML = '';
+
+            for (let i = 1; i <= totalPages; i++) {
+                paginationHTML += `<a href="#" class="${i === currentPage ? 'active' : ''}" data-page="${i}">${i}</a>`;
+            }
+
+            paginationContainer.innerHTML = paginationHTML;
+
+            // Add event listeners to pagination links
+            document.querySelectorAll('.pagination a').forEach(link => {
+                link.addEventListener('click', function (e) {
+                    e.preventDefault();
+                    currentPage = parseInt(this.dataset.page);
+                    renderTable(getCurrentPageSurveys());
+                    renderPagination();
+                });
+            });
+        }
+         // Function to show the form and hide the table
+        const showForm = () => {
+            addSurveyForm.classList.add('active');
+            surveyTableContainer.classList.add('hidden');
+             paginationContainer.innerHTML = '';
+
+            // Set the current date in the date field of the form
+            const now = new Date();
+            const nowFormatted = now.toISOString().slice(0, 16); // Format YYYY-MM-DDTHH:mm
+            document.getElementById('fecha').value = nowFormatted;
+
+        };
+        // Function to hide the form and show the table
+        const hideForm = () => {
+            addSurveyForm.classList.remove('active');
+            surveyTableContainer.classList.remove('hidden');
+            editingIndex = -1; // Reset editing index
+            addSurveyForm.reset(); // Clear the form
+              filterSurveys(currentFilter); // Apply current filter
+        };
+          // Function to filter surveys based on type
+        function filterSurveys(filter) {
+             currentFilter = filter; // Update current filter
+            currentPage = 1; // Reset to the first page
+            if (filter === 'all') {
+                filteredSurveys = [...surveys];
+            } else {
+                filteredSurveys = surveys.filter(survey => survey['Tipo de Survey'] === filter);
+            }
+            renderTable(getCurrentPageSurveys());
+            renderPagination();
+        }
+         // Attach event listeners to filter links
+        filterLinks.forEach(link => {
+            link.addEventListener('click', (e) => {
+                e.preventDefault();
+                const filter = link.dataset.filter;
+                filterSurveys(filter);
+            });
+        });
+        // Event to show the form
+        console.log(addSurveyBtn); // Verify that addSurveyBtn is being selected correctly
+        if (addSurveyBtn) {
+            addSurveyBtn.addEventListener('click', () => {
+                showForm();
+            });
+        } else {
+            console.error('The "addSurveyBtn" button was not found.');
+        }
+        // Event to cancel the form
+        cancelBtn.addEventListener('click', () => {
+            hideForm();
+        });
+          // Function to validate URL
+        function isValidUrl(url) {
+            try {
+                new URL(url);
+                return true;
+            } catch (_) {
+                return false;
+            }
+        }
+
+        // Function to generate the content of the TXT file
+        function generateTxtContent(survey) {
+            let txtContent = '';
+            txtContent += "----------------\n";
+            txtContent += `Nombre: ${survey.Nombre}\n`;
+            txtContent += `Tipo de Survey: ${survey['Tipo de Survey']}\n`;
+            txtContent += `Fecha: ${survey.Fecha || ''}\n`;
+            txtContent += `Comentario: ${survey.Comentario || ''}\n`;
+            txtContent += "\n"; // Add a blank space after the survey
+            return txtContent;
+        }
+
+        // Function to download the TXT file
+        function downloadTxtFile(content, filename) {
+            const element = document.createElement('a');
+            const file = new Blob([content], { type: 'text/plain' });
+            element.href = URL.createObjectURL(file);
+            element.download = filename + ".txt";
+            document.body.appendChild(element); // Required for this to work in FireFox
+            element.click();
+            document.body.removeChild(element);
+        }
+        // Attach event listener to the export button
+        exportBtn.addEventListener('click', (e) => {
+            e.preventDefault();
+
+            // Reset error messages
+            document.getElementById('nombre-error').textContent = '';
+            document.getElementById('tipo-error').textContent = '';
+            document.getElementById('fecha-error').textContent = '';
+            document.getElementById('comentario-error').textContent = '';
+
+            // Get values from the form
+            const nombre = document.getElementById('nombre').value;
+            const tipo = document.getElementById('tipo').value;
+            const fecha = document.getElementById('fecha').value;
+            const comentario = document.getElementById('comentario').value;
+
+            // Validate URL
+            if (!isValidUrl(nombre)) {
+                document.getElementById('nombre-error').textContent = 'Por favor, introduce una URL válida.';
+                showNotification('Por favor, introduce una URL válida.', 'error');
+                return;
+            }
+
+            // Validate required fields
+            if (!nombre) {
+                document.getElementById('nombre-error').textContent = 'Este campo es obligatorio.';
+                showNotification('El nombre es obligatorio.', 'error');
+                return;
+            }
+            if (!tipo) {
+                document.getElementById('tipo-error').textContent = 'Este campo es obligatorio.';
+                showNotification('El tipo es obligatorio.', 'error');
+                return;
+            }
+            if (!fecha) {
+                document.getElementById('fecha-error').textContent = 'Este campo es obligatorio.';
+                showNotification('La fecha es obligatoria.', 'error');
+                return;
+            }
+            if (!comentario) {
+                document.getElementById('comentario-error').textContent = 'Este campo es obligatorio.';
+                showNotification('El comentario es obligatorio.', 'error');
+                return;
+            }
+
+            // Create an object representing the new survey
+            const newSurvey = {
+                Nombre: nombre,
+                'Tipo de Survey': tipo,
+                Fecha: fecha,
+                Comentario: comentario
+            };
+
+            const txtContent = generateTxtContent(newSurvey);
+            downloadTxtFile(txtContent, nombre); // Use survey name as filename
+            showNotification('Survey exportado correctamente.', 'success');
+            hideForm();
+        });
+
+        // Load surveys when loading the page
+        loadSurveys();
+    </script>
+<script>
+
+    // ... (código anterior sin cambios)
+</script>
