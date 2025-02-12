@@ -9,7 +9,40 @@
    
    
    
-   
+   <style>
+
+.search-container {
+    position: relative;
+    margin: 1rem 0;
+    transition: var(--transition); /* Agregar transición para suavizar la aparición/desaparición */
+}
+
+.search-container.hidden {
+    display: none; /* Ocultar el contenedor de búsqueda */
+}
+
+#search-input {
+    width: 100%;
+    padding: 0.8rem 2.5rem 0.8rem 1rem;
+    border: 1px solid var(--form-border-color);
+    border-radius: var(--border-radius);
+    background-color: #3a3a3a;
+    color: var(--text-color);
+    font-size: 1rem;
+    transition: var(--transition);
+    margin-top: auto;
+}
+
+.search-container .fa-search {
+    position: absolute;
+    right: 1rem;
+    top: 50%;
+    transform: translateY(-50%);
+    color: var(--text-color);
+    opacity: 0.7;
+}
+
+   </style>
    
    
    
@@ -223,7 +256,7 @@
         /* Add Survey Form */
         #add-survey-form {
             display: none;
-            margin-top: 2rem;
+            margin-top: 1rem;
             padding: 2rem;
             background-color: var(--form-bg-color);
             border-radius: var(--border-radius);
@@ -483,8 +516,14 @@
                 <li><a href="#" data-filter="Sample-Cube"><i class="fas fa-cube"></i> Sample-Cube</a></li>
             </ul>
         </div>
+        
+        
 
         <div class="main-content">
+
+            <input type="text" id="search-input" placeholder="Buscar surveys por nombre o comentario...">
+
+
             <form id="add-survey-form">
                 <label for="nombre">Nombre del survey (URL):</label>
                 <input type="text" id="nombre" name="nombre" required>
@@ -536,8 +575,17 @@
     </div>
 
     <script>
+
+        
         // JavaScript
         const addSurveyBtn = document.getElementById('add-survey-btn');
+
+addSurveyBtn.addEventListener('click', () => {
+  document.getElementById('search-input').style.display = 'none';
+});
+
+
+
         const addSurveyForm = document.getElementById('add-survey-form');
         const cancelBtn = document.getElementById('cancel-btn');
         const surveyTableContainer = document.getElementById('survey-table-container');
@@ -793,19 +841,45 @@
             return txtContent;
         }
 
-        // Function to download the TXT file
+
+
+
+
+
+        
         function downloadTxtFile(content, filename) {
-            const element = document.createElement('a');
-            const file = new Blob([content], { type: 'text/plain' });
-            element.href = URL.createObjectURL(file);
-            element.download = filename + ".txt";
-            document.body.appendChild(element); // Required for this to work in FireFox
-            element.click();
-            document.body.removeChild(element);
-        }
+    // Verificar si el archivo ya existe
+    const existingSurveys = surveys.map(s => s.Nombre.toLowerCase().trim());
+    if (existingSurveys.includes(filename.toLowerCase().trim())) {
+        showNotification('Esta survey ya esta agregada en el .txt.', 'error');
+        throw new Error('Survey duplicado');
+    }
+
+    // Crear y descargar archivo
+    const element = document.createElement('a');
+    const file = new Blob([content], { type: 'text/plain' });
+    element.href = URL.createObjectURL(file);
+    element.download = `${filename.replace(/[^a-z0-9]/gi, '_')}.txt`; // Sanitizar nombre de archivo
+    document.body.appendChild(element);
+    element.click();
+    document.body.removeChild(element);
+}
         // Attach event listener to the export button
         exportBtn.addEventListener('click', (e) => {
             e.preventDefault();
+
+
+
+            
+
+
+
+
+
+
+
+
+
 
             // Reset error messages
             document.getElementById('nombre-error').textContent = '';
@@ -865,6 +939,50 @@
         // Load surveys when loading the page
         loadSurveys();
     </script>
+
+
+
+
+
+
+
+
+
+
+
+<script>
+let searchTerm = '';
+
+function applyFilters() {
+    filteredSurveys = surveys.filter(survey => {
+        const matchesType = currentFilter === 'all' || survey['Tipo de Survey'] === currentFilter;
+        const matchesSearch = searchTerm === '' || 
+            survey.Nombre.toLowerCase().includes(searchTerm) ||
+            (survey.Comentario && survey.Comentario.toLowerCase().includes(searchTerm));
+        return matchesType && matchesSearch;
+    });
+    currentPage = 1;
+    renderTable(getCurrentPageSurveys());
+    renderPagination();
+}
+
+// Event listener para el buscador
+document.getElementById('search-input').addEventListener('input', (e) => {
+    searchTerm = e.target.value.trim().toLowerCase();
+    applyFilters();
+});
+
+</script>
     
+
+
+
+
+
+
+
+
+
+
     </body>
 </html>
