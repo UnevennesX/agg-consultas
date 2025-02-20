@@ -16,7 +16,7 @@
 
 
     
-      <style>
+       <style>
         *, *::before, *::after {
             margin: 0;
             padding: 0;
@@ -395,23 +395,19 @@
                 padding: 1rem;
             }
 
-            /*  Specific image container styles for mobile */
+          /* Specific image container styles for mobile */
             .image-container {
-                display: flex;
-                overflow-x: auto; /* Horizontal scrolling */
-                scroll-snap-type: x mandatory; /*  Each image snaps into view */
+                display: flex; /* Ensures items are laid out in a row */
             }
 
             .image-item {
-                flex: 0 0 auto;  /* Don't grow, don't shrink, base size automatic */
-                width: 100%; /* Each image takes full width */
-                scroll-snap-align: start; /* Snap to the start of the container */
-                margin-right: 10px; /* Space between images */
+                flex: 0 0 auto; /*  Keeps images from shrinking/growing */
+                width: auto; /* Default width */
             }
 
-            /* Hide images beyond the first 3 using nth-child  */
+            /* Hide images beyond the first 3 */
             .image-item:nth-child(n+4) {
-                display: none;
+                display: none; /* Completely hide the element */
             }
         }
 
@@ -599,7 +595,6 @@
             }
         }
    </style>
-
 
 
 
