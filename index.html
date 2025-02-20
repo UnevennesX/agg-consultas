@@ -15,9 +15,9 @@
 
 
 
-    
-   <style>
+
        <style>
+   <style>
         *, *::before, *::after {
             margin: 0;
             padding: 0;
@@ -396,28 +396,22 @@
                 padding: 1rem;
             }
 
-         /* Specific image container styles for mobile */
-            /* Specific image container styles for mobile */
-            .image-container img:nth-child(n+4) {
-                display: none;
+          /* Specific image container styles for mobile */
+            .image-container {
+                display: flex; /* Ensures items are laid out in a row */
             }
 
-            /* Maintain button size */
-            #add-survey-form button[type="button"] {
-                background-color: #4c5861;
-                color: var(--light-color);
-                border: none;
-                padding: 1rem 1.5rem;
-                border-radius: var(--border-radius);
-                cursor: pointer;
-                transition: var(--transition);
-                margin-top: 1.5rem;
-                box-shadow: var(--shadow);
-                outline: none;
-                font-size: 1.1rem;
-                font-weight: 600;
-                margin-top: auto;
-                margin-inline: 1px;
+            .image-item {
+                flex: 0 0 auto; /*  Keeps images from shrinking/growing */
+                width: auto; /* Default width */
+            }
+
+            /* Hide images beyond the first 3 */
+            .image-item:nth-child(n+4) {
+                display: none; /* Completely hide the element */
+         /* Specific image container styles for mobile */
+            .image-container img:nth-child(n+4) {
+                display: none;
             }
         }
 
@@ -618,6 +612,20 @@
     <div class="header">
 
 
+        <div class="image-container">
+        <img src="https://cdn.dribbble.com/users/7549673/screenshots/17206704/media/1210a9d0ec8af427967e735935861eeb.png?resize=70x60&vertical=center" alt="Imagen 1">
+       
+        <img src="https://cdn.dribbble.com/users/7549673/screenshots/17206704/media/1210a9d0ec8af427967e735935861eeb.png?resize=70x60&vertical=center" alt="Imagen 2">
+
+        <img src="https://cdn.dribbble.com/users/7549673/screenshots/17206704/media/1210a9d0ec8af427967e735935861eeb.png?resize=70x60&vertical=center" alt="Imagen 3">
+
+        <img src="https://cdn.dribbble.com/users/7549673/screenshots/17206704/media/1210a9d0ec8af427967e735935861eeb.png?resize=70x60&vertical=center" alt="Imagen 4">
+
+        <img src="https://cdn.dribbble.com/users/7549673/screenshots/17206704/media/1210a9d0ec8af427967e735935861eeb.png?resize=70x60&vertical=center" alt="Imagen 5">
+
+        <img src="https://cdn.dribbble.com/users/7549673/screenshots/17206704/media/1210a9d0ec8af427967e735935861eeb.png?resize=70x60&vertical=center" alt="Imagen 6">
+
+        <img src="https://cdn.dribbble.com/users/7549673/screenshots/17206704/media/1210a9d0ec8af427967e735935861eeb.png?resize=70x60&vertical=center" alt="Imagen 7">
 <div class="image-container">
     <img src="https://cdn.dribbble.com/users/7549673/screenshots/17206704/media/1210a9d0ec8af427967e735935861eeb.png?resize=70x60&vertical=center" alt="Imagen 1">
     <img src="https://cdn.dribbble.com/users/7549673/screenshots/17206704/media/1210a9d0ec8af427967e735935861eeb.png?resize=70x60&vertical=center" alt="Imagen 2">
