@@ -17,7 +17,7 @@
 
 
 
-    <style>
+  <style>
     *,
     *::before,
     *::after {
@@ -202,7 +202,7 @@
         position: relative;
         overflow: hidden;
         font-weight: 600;
-        width: auto; /* Default width */
+        width: auto; /* Valor por defecto: se ajusta al contenido */
     }
 
     #add-survey-btn::before {
@@ -367,59 +367,50 @@
     }
 
     /* Responsive */
-    @media (max-width: 768px) {
-        .container {
-            flex-direction: column;
-            margin: 1rem;
-        }
-
-        .sidebar {
-            width: 100%;
-            padding: 1.5rem;
-        }
-
-        .header {
-            padding: 1rem;
-        }
-
-        .header h1 {
-            font-size: 1.8rem;
-        }
-
-        .main-content {
-            padding: 1.5rem;
-            border-radius: 0 0 var(--border-radius) 0;
-        }
-
+    @media (max-width: 480px) {
         #add-survey-btn {
+            width: 100%; /* Pantallas muy pequeñas: 100% del ancho */
             font-size: 1rem;
             padding: 0.7rem 1.2rem;
-            width: 100%; /* Full width on mobile */
-            margin-bottom: 1rem;
         }
 
-        #survey-table th,
-        #survey-table td {
+        #add-survey-form {
             padding: 1rem;
         }
 
-        /* Specific image container styles for mobile */
-        .image-container {
-            display: flex;
-            overflow-x: auto; /* Horizontal scrolling */
-            scroll-snap-type: x mandatory; /* Each image snaps into view */
+        #add-survey-form input,
+        #add-survey-form select,
+        #add-survey-form textarea {
+            font-size: 14px;
         }
 
-        .image-item {
-            flex: 0 0 auto; /* Don't grow, don't shrink, base size automatic */
-            width: 100%; /* Each image takes full width */
-            scroll-snap-align: start; /* Snap to the start of the container */
-            margin-right: 10px; /* Space between images */
+        .pagination a {
+            padding: 0.5rem 0.8rem;
+            font-size: 14px;
         }
+    }
 
-        /* Hide images beyond the first 3 using nth-child  */
-        .image-item:nth-child(n+4) {
-            display: none;
+    @media (min-width: 481px) and (max-width: 768px) {
+        #add-survey-btn {
+            width: 75%; /* Pantallas pequeñas: 75% del ancho */
+            font-size: 1.1rem;
+            padding: 0.8rem 1.4rem;
+        }
+    }
+
+    @media (min-width: 769px) and (max-width: 1024px) {
+        #add-survey-btn {
+            width: auto; /* Pantallas medianas: ajuste al contenido */
+            font-size: 1.2rem;
+            padding: 0.9rem 1.6rem;
+        }
+    }
+
+    @media (min-width: 1025px) {
+        #add-survey-btn {
+            width: auto; /* Pantallas grandes: ajuste al contenido */
+            font-size: 1.2rem;
+            padding: 1rem 1.75rem;
         }
     }
 
@@ -582,24 +573,6 @@
         .action-buttons button {
             padding: 0.5rem;
             margin: 0 0.2rem;
-        }
-    }
-
-    /* Ajustes adicionales para pantallas pequeñas */
-    @media (max-width: 480px) {
-        #add-survey-form {
-            padding: 1rem;
-        }
-
-        #add-survey-form input,
-        #add-survey-form select,
-        #add-survey-form textarea {
-            font-size: 14px;
-        }
-
-        .pagination a {
-            padding: 0.5rem 0.8rem;
-            font-size: 14px;
         }
     }
 </style>
