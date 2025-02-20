@@ -10,175 +10,30 @@
    
    
    <style>
-
-
-
-@media (max-width: 768px) {
-    .container {
-        margin: 0.5rem;
-        border-radius: 0;
-    }
-
-    .header {
-        padding: 1rem 0.5rem;
-    }
-
-    .header h1 {
-        font-size: 1.5rem;
-    }
-
-    .sidebar {
-        padding: 1rem;
-        width: 100%;
-        border-radius: 0;
-    }
-
-    .main-content {
-        padding: 1rem;
-        border-radius: 0;
-    }
-
-    #survey-table {
-        display: block;
-        overflow-x: auto;
-        white-space: nowrap;
-    }
-
-    #add-survey-form input[type="datetime-local"] {
-        font-size: 16px; /* Evita el zoom en iOS */
-        padding: 0.8rem;
-    }
-
-    .action-buttons button {
-        padding: 0.5rem;
-        margin: 0 0.2rem;
-    }
-
-    #add-survey-btn {
-        width: 100%;
-        margin-bottom: 1rem;
-    }
-}
-
-/* Ajustes adicionales para pantallas pequeñas */
-@media (max-width: 480px) {
-    #add-survey-form {
-        padding: 1rem;
-    }
-
-    #add-survey-form input,
-    #add-survey-form select,
-    #add-survey-form textarea {
-        font-size: 14px;
-    }
-
-    .pagination a {
-        padding: 0.5rem 0.8rem;
-        font-size: 14px;
-    }
-}
-
-
-
-
-
-input[type="datetime-local"] {
-    position: relative;
-    min-height: 40px;
-}
-
-input[type="datetime-local"]::-webkit-calendar-picker-indicator {
-    filter: invert(0.8);
-    padding: 5px;
-    cursor: pointer;
-}
-
-input[type="datetime-local"]:before {
-    content: 'Seleccionar fecha y hora: ';
-    color: var(--text-color);
-    margin-right: 0.5rem;
-}
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-.search-container {
-    position: relative;
-    margin: 1rem 0;
-    transition: var(--transition); /* Agregar transición para suavizar la aparición/desaparición */
-}
-
-.search-container.hidden {
-    display: none; /* Ocultar el contenedor de búsqueda */
-}
-
-#search-input {
-    width: 100%;
-    padding: 0.8rem 2.5rem 0.8rem 1rem;
-    border: 1px solid var(--form-border-color);
-    border-radius: var(--border-radius);
-    background-color: #3a3a3a;
-    color: var(--text-color);
-    font-size: 1rem;
-    transition: var(--transition);
-    margin-top: auto;
-}
-
-.search-container .fa-search {
-    position: absolute;
-    right: 1rem;
-    top: 50%;
-    transform: translateY(-50%);
-    color: var(--text-color);
-    opacity: 0.7;
-}
-
-   </style>
-   
-   
-   
-   
-   
-    <style>
         *, *::before, *::after {
             margin: 0;
             padding: 0;
             box-sizing: border-box;
         }
-        
+
         :root {
-            --primary-color: #1a1a1a; /* Fondo oscuro principal */
-            --secondary-color: #2d2d2d; /* Fondo secundario */
-            --light-color: #ffffff; /* Blanco puro */
-            --text-color: #e0e0e0; /* Gris claro para el texto */
-            --success-color: #4caf50; /* Verde suave */
-            --danger-color: #f44336; /* Rojo suave */
-            --warning-color: #ff9800; /* Naranja suave */
-            --border-radius: 8px; /* Bordes redondeados */
+            --primary-color: #1a1a1a;
+            --secondary-color: #2d2d2d;
+            --light-color: #ffffff;
+            --text-color: #e0e0e0;
+            --success-color: #4caf50;
+            --danger-color: #f44336;
+            --warning-color: #ff9800;
+            --border-radius: 8px;
             --shadow: 0 4px 8px rgba(0, 0, 0, 0.3);
             --transition: all 0.3s ease-in-out;
-            --form-bg-color: #2d2d2d; /* Fondo del formulario */
-            --form-border-color: #444; /* Borde del formulario */
-            --highlight-color: #64b5f6; /* Azul claro para resaltar */
-            --accent-color: #2196f3; /* Azul brillante para acentos */
-            --hover-shadow: 0 6px 12px rgba(0, 0, 0, 0.4); /* Sombra al pasar el cursor */
+            --form-bg-color: #2d2d2d;
+            --form-border-color: #444;
+            --highlight-color: #64b5f6;
+            --accent-color: #2196f3;
+            --hover-shadow: 0 6px 12px rgba(0, 0, 0, 0.4);
         }
-        
+
         body {
             font-family: 'Roboto', sans-serif;
             background-color: var(--primary-color);
@@ -189,7 +44,7 @@ input[type="datetime-local"]:before {
             min-height: 100vh;
             overflow-x: hidden;
         }
-        
+
         /* Header */
         .header {
             background-color: #262626;
@@ -204,7 +59,7 @@ input[type="datetime-local"]:before {
             overflow: hidden;
             border-radius: var(--border-radius);
         }
-        
+
         .header::after {
             content: '';
             position: absolute;
@@ -212,22 +67,22 @@ input[type="datetime-local"]:before {
             left: 50%;
             transform: translateX(-50%);
             width: 0;
-            height: 4px; /* Línea decorativa */
+            height: 4px;
             background-color: var(--accent-color);
             transition: width 0.5s ease-in-out;
         }
-        
+
         .header:hover::after {
             width: 100%;
         }
-        
+
         .header h1 {
             font-size: 2.4rem;
             font-weight: 500;
             margin-bottom: 0;
             letter-spacing: 0.5px;
         }
-        
+
         /* Container */
         .container {
             display: flex;
@@ -238,7 +93,7 @@ input[type="datetime-local"]:before {
             box-shadow: var(--shadow);
             background-color: var(--secondary-color);
         }
-        
+
         /* Sidebar */
         .sidebar {
             width: 300px;
@@ -249,7 +104,7 @@ input[type="datetime-local"]:before {
             flex-direction: column;
             border-radius: var(--border-radius);
         }
-        
+
         .sidebar h2 {
             font-size: 1.4rem;
             margin-bottom: 1.5rem;
@@ -258,17 +113,17 @@ input[type="datetime-local"]:before {
             color: var(--light-color);
             font-weight: 500;
         }
-        
+
         .sidebar ul {
             list-style: none;
             padding: 0;
             flex: 1;
         }
-        
+
         .sidebar li {
             margin-bottom: 1.2rem;
         }
-        
+
         .sidebar a {
             color: var(--text-color);
             text-decoration: none;
@@ -280,7 +135,7 @@ input[type="datetime-local"]:before {
             position: relative;
             overflow: hidden;
         }
-        
+
         .sidebar a::before {
             content: '';
             position: absolute;
@@ -293,24 +148,24 @@ input[type="datetime-local"]:before {
             transition: transform 0.3s ease-in-out;
             transform-origin: top;
         }
-        
+
         .sidebar a:hover::before {
             transform: scaleY(1);
         }
-        
+
         .sidebar a:hover {
             background-color: rgba(255, 255, 255, 0.05);
             color: var(--light-color);
             box-shadow: var(--hover-shadow);
         }
-        
+
         .sidebar a i {
             margin-right: 1rem;
             width: 24px;
             text-align: center;
             font-size: 1.2rem;
         }
-        
+
         /* Main Content */
         .main-content {
             flex: 1;
@@ -320,7 +175,7 @@ input[type="datetime-local"]:before {
             border-radius: 0 var(--border-radius) var(--border-radius) 0;
             box-shadow: var(--shadow);
         }
-        
+
         /* Add Survey Button */
         #add-survey-btn {
             background-color: #4c5861;
@@ -337,7 +192,7 @@ input[type="datetime-local"]:before {
             overflow: hidden;
             font-weight: 600;
         }
-        
+
         #add-survey-btn::before {
             content: '';
             position: absolute;
@@ -349,17 +204,17 @@ input[type="datetime-local"]:before {
             opacity: 0;
             transition: opacity 0.3s ease-in-out;
         }
-        
+
         #add-survey-btn:hover::before {
             opacity: 1;
-            
+
         }
-        
+
         #add-survey-btn:hover {
             transform: translateY(-3px);
             box-shadow: var(--hover-shadow);
         }
-        
+
         /* Add Survey Form */
         #add-survey-form {
             display: none;
@@ -369,11 +224,11 @@ input[type="datetime-local"]:before {
             border-radius: var(--border-radius);
             box-shadow: var(--shadow);
         }
-        
+
         #add-survey-form.active {
             display: block;
         }
-        
+
         #add-survey-form label {
             display: block;
             margin-bottom: 0.7rem;
@@ -381,7 +236,7 @@ input[type="datetime-local"]:before {
             color: var(--light-color);
             font-size: 1.1rem;
         }
-        
+
         #add-survey-form input[type="text"],
         #add-survey-form select,
         #add-survey-form input[type="datetime-local"],
@@ -397,7 +252,7 @@ input[type="datetime-local"]:before {
             color: var(--text-color);
             font-size: 1.1rem;
         }
-        
+
         #add-survey-form input[type="text"]:focus,
         #add-survey-form select:focus,
         #add-survey-form input[type="datetime-local"]:focus,
@@ -405,12 +260,12 @@ input[type="datetime-local"]:before {
             border-color: var(--highlight-color);
             box-shadow: 0 0 8px rgba(100, 181, 246, 0.7);
         }
-        
+
         #add-survey-form textarea {
             resize: vertical;
             min-height: 150px;
         }
-        
+
         /* Estilos para los botones del formulario */
         #add-survey-form button[type="button"] {
             background-color: #4c5861;
@@ -428,22 +283,22 @@ input[type="datetime-local"]:before {
             margin-top: auto;
             margin-inline: 1px;
         }
-        
+
         #add-survey-form button[type="button"]:hover {
             background-color: #0b5544;
             transform: translateY(-2px);
             box-shadow: var(--hover-shadow);
         }
-        
+
         /* Survey Table */
         #survey-table-container {
             display: block;
         }
-        
+
         #survey-table-container.hidden {
             display: none;
         }
-        
+
         #survey-table {
             width: 100%;
             border-collapse: collapse;
@@ -452,13 +307,13 @@ input[type="datetime-local"]:before {
             overflow: hidden;
             box-shadow: var(--shadow);
         }
-        
+
         #survey-table th, #survey-table td {
             padding: 1.4rem;
             border: 1px solid #444;
             text-align: left;
         }
-        
+
         #survey-table th {
             background-color: #444;
             font-weight: 500;
@@ -466,15 +321,15 @@ input[type="datetime-local"]:before {
             text-transform: uppercase;
             letter-spacing: 0.5px;
         }
-        
+
         #survey-table td {
             color: var(--text-color);
         }
-        
+
         .action-buttons {
             text-align: center;
         }
-        
+
         .action-buttons button {
             background-color: transparent;
             border: none;
@@ -485,55 +340,55 @@ input[type="datetime-local"]:before {
             transition: var(--transition);
             outline: none;
         }
-        
+
         .action-buttons button:hover {
             background-color: rgba(255, 255, 255, 0.05);
             box-shadow: var(--hover-shadow);
         }
-        
+
         .edit-btn {
             color: var(--warning-color);
         }
-        
+
         .delete-btn {
             color: var(--danger-color);
         }
-        
+
         /* Responsive */
         @media (max-width: 768px) {
             .container {
                 flex-direction: column;
                 margin: 1rem;
             }
-        
+
             .sidebar {
                 width: 100%;
                 padding: 1.5rem;
             }
-        
+
             .header {
                 padding: 1rem;
             }
-        
+
             .header h1 {
                 font-size: 1.8rem;
             }
-        
+
             .main-content {
                 padding: 1.5rem;
                 border-radius: 0 0 var(--border-radius) 0;
             }
-        
+
             #add-survey-btn {
                 font-size: 1rem;
                 padding: 0.7rem 1.2rem;
             }
-        
+
             #survey-table th, #survey-table td {
                 padding: 1rem;
             }
         }
-        
+
         /* Estilos para las notificaciones */
         .notification {
             position: fixed;
@@ -549,34 +404,34 @@ input[type="datetime-local"]:before {
             transform: translateY(-20px);
             text-align: center;
         }
-        
+
         .notification.show {
             opacity: 1;
             transform: translate(-50%, 0);
         }
-        
+
         .notification.success {
             background-color: var(--success-color);
             color: var(--light-color);
         }
-        
+
         .notification.error {
             background-color: var(--danger-color);
             color: var(--light-color);
         }
-        
+
         .error {
             color: var(--danger-color);
             margin-top: 0.5rem;
             display: block;
         }
-        
+
         /* Pagination Styles */
         .pagination {
             margin-top: 20px;
             text-align: center;
         }
-        
+
         .pagination a {
             color: wheat;
             padding: 1rem 1.5rem;
@@ -587,19 +442,137 @@ input[type="datetime-local"]:before {
             transition: var(--transition);
             display: inline-block;
         }
-        
+
         .pagination a.active {
             background-color: #0b5544;
             color: var(--light-color);
             border-color: #0b5544;
         }
-        
+
         .pagination a:hover:not(.active) {
             background-color: var(--highlight-color);
             color: var(--light-color);
             box-shadow: var(--hover-shadow);
         }
-        </style>
+
+        /* datetime-local specific styles */
+        input[type="datetime-local"] {
+            position: relative;
+            min-height: 40px;
+        }
+
+        input[type="datetime-local"]::-webkit-calendar-picker-indicator {
+            filter: invert(0.8);
+            padding: 5px;
+            cursor: pointer;
+        }
+
+        /*  Hide label on datetime */
+        /*input[type="datetime-local"]:before {
+            content: 'Select date and time: ';
+            color: var(--text-color);
+            margin-right: 0.5rem;
+        }*/
+
+        /* Search */
+
+        .search-container {
+            position: relative;
+            margin: 1rem 0;
+            transition: var(--transition); /* Agregar transición para suavizar la aparición/desaparición */
+        }
+
+        .search-container.hidden {
+            display: none; /* Ocultar el contenedor de búsqueda */
+        }
+
+        #search-input {
+            width: 100%;
+            padding: 0.8rem 2.5rem 0.8rem 1rem;
+            border: 1px solid var(--form-border-color);
+            border-radius: var(--border-radius);
+            background-color: #3a3a3a;
+            color: var(--text-color);
+            font-size: 1rem;
+            transition: var(--transition);
+            margin-top: auto;
+        }
+
+        .search-container .fa-search {
+            position: absolute;
+            right: 1rem;
+            top: 50%;
+            transform: translateY(-50%);
+            color: var(--text-color);
+            opacity: 0.7;
+        }
+
+        /* Mobile adjustments (table) */
+        @media (max-width: 768px) {
+            .container {
+                margin: 0.5rem;
+                border-radius: 0;
+            }
+
+            .header {
+                padding: 1rem 0.5rem;
+            }
+
+            .header h1 {
+                font-size: 1.5rem;
+            }
+
+            .sidebar {
+                padding: 1rem;
+                width: 100%;
+                border-radius: 0;
+            }
+
+            .main-content {
+                padding: 1rem;
+                border-radius: 0;
+            }
+
+            #survey-table {
+                display: block;
+                overflow-x: auto;
+                white-space: nowrap;
+            }
+
+            #add-survey-form input[type="datetime-local"] {
+                font-size: 16px; /* Evita el zoom en iOS */
+                padding: 0.8rem;
+            }
+
+            .action-buttons button {
+                padding: 0.5rem;
+                margin: 0 0.2rem;
+            }
+
+            #add-survey-btn {
+                width: 100%;
+                margin-bottom: 1rem;
+            }
+        }
+
+        /* Ajustes adicionales para pantallas pequeñas */
+        @media (max-width: 480px) {
+            #add-survey-form {
+                padding: 1rem;
+            }
+
+            #add-survey-form input,
+            #add-survey-form select,
+            #add-survey-form textarea {
+                font-size: 14px;
+            }
+
+            .pagination a {
+                padding: 0.5rem 0.8rem;
+                font-size: 14px;
+            }
+        }
+   </style>
 
 
 
