@@ -20,7 +20,9 @@
 
 
 
-<style>
+
+
+   <style>
         *, *::before, *::after {
             margin: 0;
             padding: 0;
@@ -218,6 +220,7 @@
 
         #add-survey-btn:hover::before {
             opacity: 1;
+
         }
 
         #add-survey-btn:hover {
@@ -276,12 +279,12 @@
             min-height: 150px;
         }
 
-        /* ============== BOTONES CORREGIDOS ============== */
+        /* Estilos para los botones del formulario */
         #add-survey-form button[type="button"] {
             background-color: #4c5861;
             color: var(--light-color);
             border: none;
-            padding: 0 1.5rem;  /* Solo padding horizontal */
+            padding: 1rem 1.5rem;
             border-radius: var(--border-radius);
             cursor: pointer;
             transition: var(--transition);
@@ -290,18 +293,8 @@
             outline: none;
             font-size: 1.1rem;
             font-weight: 600;
-            height: 45px;       /* Alto fijo */
-            width: auto;        /* Ancho automático */
-            display: inline-flex;
-            align-items: center;
-            justify-content: center;
-            line-height: 1;
-        }
-
-        .form-buttons-container {
-            display: flex;
-            gap: 15px;
-            margin-top: 1.5rem;
+            margin-top: auto;
+            margin-inline: 1px;
         }
 
         #add-survey-form button[type="button"]:hover {
@@ -310,22 +303,309 @@
             box-shadow: var(--hover-shadow);
         }
 
+        /* Survey Table */
+        #survey-table-container {
+            display: block;
+        }
+
+        #survey-table-container.hidden {
+            display: none;
+        }
+
+        #survey-table {
+            width: 100%;
+            border-collapse: collapse;
+            margin-top: 2rem;
+            border-radius: var(--border-radius);
+            overflow: hidden;
+            box-shadow: var(--shadow);
+        }
+
+        #survey-table th, #survey-table td {
+            padding: 1.4rem;
+            border: 1px solid #444;
+            text-align: left;
+        }
+
+        #survey-table th {
+            background-color: #444;
+            font-weight: 500;
+            color: var(--light-color);
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
+        }
+
+        #survey-table td {
+            color: var(--text-color);
+        }
+
+        .action-buttons {
+            text-align: center;
+        }
+
+        .action-buttons button {
+            background-color: transparent;
+            border: none;
+            cursor: pointer;
+            margin: 0 0.5rem;
+            padding: 0.8rem;
+            border-radius: var(--border-radius);
+            transition: var(--transition);
+            outline: none;
+        }
+
+        .action-buttons button:hover {
+            background-color: rgba(255, 255, 255, 0.05);
+            box-shadow: var(--hover-shadow);
+        }
+
+        .edit-btn {
+            color: var(--warning-color);
+        }
+
+        .delete-btn {
+            color: var(--danger-color);
+        }
+
+        /* Responsive */
         @media (max-width: 768px) {
-            #add-survey-form button[type="button"] {
-                height: 40px;    /* Altura reducida en móviles */
-                font-size: 1rem;
-                padding: 0 1.2rem;
+            .container {
+                flex-direction: column;
+                margin: 1rem;
             }
-            
-            .form-buttons-container {
-                flex-wrap: wrap;
-                gap: 10px;
+
+            .sidebar {
+                width: 100%;
+                padding: 1.5rem;
+            }
+
+            .header {
+                padding: 1rem;
+            }
+
+            .header h1 {
+                font-size: 1.8rem;
+            }
+
+            .main-content {
+                padding: 1.5rem;
+                border-radius: 0 0 var(--border-radius) 0;
+            }
+
+            #add-survey-btn {
+                font-size: 1rem;
+                padding: 0.7rem 1.2rem;
+            }
+
+            #survey-table th, #survey-table td {
+                padding: 1rem;
+            }
+
+          /* Specific image container styles for mobile */
+            .image-container {
+                display: flex; /* Ensures items are laid out in a row */
+            }
+
+            .image-item {
+                flex: 0 0 auto; /*  Keeps images from shrinking/growing */
+                width: auto; /* Default width */
+            }
+
+            /* Hide images beyond the first 3 */
+            .image-item:nth-child(n+4) {
+                display: none; /* Completely hide the element */
+         /* Specific image container styles for mobile */
+            .image-container img:nth-child(n+4) {
+                display: none;
             }
         }
-        /* ============== FIN DE BOTONES CORREGIDOS ============== */
 
-        /* ... (el resto del código se mantiene igual) ... */
-</style>
+        /* Estilos para las notificaciones */
+        .notification {
+            position: fixed;
+            top: 20px;
+            left: 50%;
+            transform: translateX(-50%);
+            padding: 1rem 1.5rem;
+            border-radius: var(--border-radius);
+            box-shadow: var(--shadow);
+            z-index: 1000;
+            opacity: 0;
+            transition: opacity 0.3s ease-in-out, transform 0.3s ease-in-out;
+            transform: translateY(-20px);
+            text-align: center;
+        }
+
+        .notification.show {
+            opacity: 1;
+            transform: translate(-50%, 0);
+        }
+
+        .notification.success {
+            background-color: var(--success-color);
+            color: var(--light-color);
+        }
+
+        .notification.error {
+            background-color: var(--danger-color);
+            color: var(--light-color);
+        }
+
+        .error {
+            color: var(--danger-color);
+            margin-top: 0.5rem;
+            display: block;
+        }
+
+        /* Pagination Styles */
+        .pagination {
+            margin-top: 20px;
+            text-align: center;
+        }
+
+        .pagination a {
+            color: wheat;
+            padding: 1rem 1.5rem;
+            text-decoration: none;
+            border: 1px solid var(--form-border-color);
+            margin: 0 4px;
+            border-radius: var(--border-radius);
+            transition: var(--transition);
+            display: inline-block;
+        }
+
+        .pagination a.active {
+            background-color: #0b5544;
+            color: var(--light-color);
+            border-color: #0b5544;
+        }
+
+        .pagination a:hover:not(.active) {
+            background-color: var(--highlight-color);
+            color: var(--light-color);
+            box-shadow: var(--hover-shadow);
+        }
+
+        /* datetime-local specific styles */
+        input[type="datetime-local"] {
+            position: relative;
+            min-height: 40px;
+        }
+
+        input[type="datetime-local"]::-webkit-calendar-picker-indicator {
+            filter: invert(0.8);
+            padding: 5px;
+            cursor: pointer;
+        }
+
+        /*  Hide label on datetime */
+        /*input[type="datetime-local"]:before {
+            content: 'Select date and time: ';
+            color: var(--text-color);
+            margin-right: 0.5rem;
+        }*/
+
+        /* Search */
+
+        .search-container {
+            position: relative;
+            margin: 1rem 0;
+            transition: var(--transition); /* Agregar transición para suavizar la aparición/desaparición */
+        }
+
+        .search-container.hidden {
+            display: none; /* Ocultar el contenedor de búsqueda */
+        }
+
+        #search-input {
+            width: 100%;
+            padding: 0.8rem 2.5rem 0.8rem 1rem;
+            border: 1px solid var(--form-border-color);
+            border-radius: var(--border-radius);
+            background-color: #3a3a3a;
+            color: var(--text-color);
+            font-size: 1rem;
+            transition: var(--transition);
+            margin-top: auto;
+        }
+
+        .search-container .fa-search {
+            position: absolute;
+            right: 1rem;
+            top: 50%;
+            transform: translateY(-50%);
+            color: var(--text-color);
+            opacity: 0.7;
+        }
+
+        /* Mobile adjustments (table) */
+        @media (max-width: 768px) {
+            .container {
+                margin: 0.5rem;
+                border-radius: 0;
+            }
+
+            .header {
+                padding: 1rem 0.5rem;
+            }
+
+            .header h1 {
+                font-size: 1.5rem;
+            }
+
+            .sidebar {
+                padding: 1rem;
+                width: 100%;
+                border-radius: 0;
+            }
+
+            .main-content {
+                padding: 1rem;
+                border-radius: 0;
+            }
+
+            #survey-table {
+                display: block;
+                overflow-x: auto;
+                white-space: nowrap;
+            }
+
+            #add-survey-form input[type="datetime-local"] {
+                font-size: 16px; /* Evita el zoom en iOS */
+                padding: 0.8rem;
+            }
+
+            .action-buttons button {
+                padding: 0.5rem;
+                margin: 0 0.2rem;
+            }
+
+            #add-survey-btn {
+                width: 100%;
+                margin-bottom: 1rem;
+            }
+        }
+
+        /* Ajustes adicionales para pantallas pequeñas */
+        @media (max-width: 480px) {
+            #add-survey-form {
+                padding: 1rem;
+            }
+
+            #add-survey-form input,
+            #add-survey-form select,
+            #add-survey-form textarea {
+                font-size: 14px;
+            }
+
+            .pagination a {
+                padding: 0.5rem 0.8rem;
+                font-size: 14px;
+            }
+        }
+   </style>
+
+
 
 
 
