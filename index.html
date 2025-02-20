@@ -6,7 +6,6 @@
     <title>Administración de Surveys</title>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
     <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600&display=swap" rel="stylesheet">
-   
 
 
 
@@ -15,6 +14,9 @@
 
 
 
+
+    
+   <style>
        <style>
         *, *::before, *::after {
             margin: 0;
@@ -394,6 +396,7 @@
                 padding: 1rem;
             }
 
+         /* Specific image container styles for mobile */
             /* Specific image container styles for mobile */
             .image-container img:nth-child(n+4) {
                 display: none;
@@ -605,7 +608,7 @@
 
 
 
-    
+
 
 
 
@@ -614,11 +617,11 @@
 <body>
     <div class="header">
 
-        
+
 <div class="image-container">
     <img src="https://cdn.dribbble.com/users/7549673/screenshots/17206704/media/1210a9d0ec8af427967e735935861eeb.png?resize=70x60&vertical=center" alt="Imagen 1">
-    <img src="https://cdn.dribbble.com/users/7549673/screenshots/17206704/media/1210a9d0ec8af427967e735935861eeb.png?resize=70x60&vertical=center" alt="Imagen 4">
-    <img src="https://cdn.dribbble.com/users/7549673/screenshots/17206704/media/1210a9d0ec8af427967e735935861eeb.png?resize=70x60&vertical=center" alt="Imagen 4">
+    <img src="https://cdn.dribbble.com/users/7549673/screenshots/17206704/media/1210a9d0ec8af427967e735935861eeb.png?resize=70x60&vertical=center" alt="Imagen 2">
+    <img src="https://cdn.dribbble.com/users/7549673/screenshots/17206704/media/1210a9d0ec8af427967e735935861eeb.png?resize=70x60&vertical=center" alt="Imagen 3">
     <img src="https://cdn.dribbble.com/users/7549673/screenshots/17206704/media/1210a9d0ec8af427967e735935861eeb.png?resize=70x60&vertical=center" alt="Imagen 4">
     <img src="https://cdn.dribbble.com/users/7549673/screenshots/17206704/media/1210a9d0ec8af427967e735935861eeb.png?resize=70x60&vertical=center" alt="Imagen 5">
     <img src="https://cdn.dribbble.com/users/7549673/screenshots/17206704/media/1210a9d0ec8af427967e735935861eeb.png?resize=70x60&vertical=center" alt="Imagen 6">
@@ -631,7 +634,7 @@
 
     <div class="container">
         <div class="sidebar">
-            
+
             <h2><i class="fas fa-filter"></i> Filtros</h2>
             <ul>
                 <li><a href="#" data-filter="all"><i class="fas fa-list"></i> Todos</a></li>
@@ -640,8 +643,8 @@
                 <li><a href="#" data-filter="Sample-Cube"><i class="fas fa-cube"></i> Sample-Cube</a></li>
             </ul>
         </div>
-        
-        
+
+
 
         <div class="main-content">
 
@@ -700,7 +703,7 @@
 
     <script>
 
-        
+
         // JavaScript
         const addSurveyBtn = document.getElementById('add-survey-btn');
 
@@ -970,7 +973,7 @@ addSurveyBtn.addEventListener('click', () => {
 
 
 
-        
+
         function downloadTxtFile(content, filename) {
     // Verificar si el archivo ya existe
     const existingSurveys = surveys.map(s => s.Nombre.toLowerCase().trim());
@@ -994,7 +997,7 @@ addSurveyBtn.addEventListener('click', () => {
 
 
 
-            
+
 
 
 
@@ -1091,7 +1094,7 @@ document.getElementById('search-input').addEventListener('input', (e) => {
 });
 
 </script>
-    
+
 
     </body>
 </html>
