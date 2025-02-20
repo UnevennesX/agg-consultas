@@ -15,8 +15,7 @@
 
 
 
-    
-   <style>
+       <style>
         *, *::before, *::after {
             margin: 0;
             padding: 0;
@@ -395,9 +394,27 @@
                 padding: 1rem;
             }
 
-         /* Specific image container styles for mobile */
+            /* Specific image container styles for mobile */
             .image-container img:nth-child(n+4) {
                 display: none;
+            }
+
+            /* Maintain button size */
+            #add-survey-form button[type="button"] {
+                background-color: #4c5861;
+                color: var(--light-color);
+                border: none;
+                padding: 1rem 1.5rem;
+                border-radius: var(--border-radius);
+                cursor: pointer;
+                transition: var(--transition);
+                margin-top: 1.5rem;
+                box-shadow: var(--shadow);
+                outline: none;
+                font-size: 1.1rem;
+                font-weight: 600;
+                margin-top: auto;
+                margin-inline: 1px;
             }
         }
 
