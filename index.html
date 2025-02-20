@@ -17,7 +17,15 @@
 
 
 
-    <style>
+      <style>
+        *,
+        *::before,
+        *::after {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
         :root {
             --primary-color: #1a1a1a;
             --secondary-color: #2d2d2d;
@@ -36,278 +44,490 @@
             --hover-shadow: 0 6px 12px rgba(0, 0, 0, 0.4);
         }
 
-        * {
-            margin: 0;
-            padding: 0;
-            box-sizing: border-box;
-        }
-
         body {
-            font-family: 'Poppins', sans-serif;
+            font-family: 'Roboto', sans-serif;
             background-color: var(--primary-color);
             color: var(--text-color);
             line-height: 1.6;
+            display: flex;
+            flex-direction: column;
             min-height: 100vh;
+            overflow-x: hidden;
         }
 
+        /* Header */
         .header {
             background-color: #262626;
-            padding: 1rem;
+            color: var(--light-color);
+            padding: 1.5rem 2rem;
+            text-align: center;
+            box-shadow: var(--shadow);
             display: flex;
             justify-content: space-between;
             align-items: center;
-            flex-wrap: wrap;
-            gap: 1rem;
-            box-shadow: var(--shadow);
+            position: relative;
+            overflow: hidden;
+            border-radius: var(--border-radius);
         }
 
-        .header img {
-            height: 50px;
-            width: auto;
+        .header::after {
+            content: '';
+            position: absolute;
+            bottom: 0;
+            left: 50%;
+            transform: translateX(-50%);
+            width: 0;
+            height: 4px;
+            background-color: var(--accent-color);
+            transition: width 0.5s ease-in-out;
         }
 
+        .header:hover::after {
+            width: 100%;
+        }
+
+        .header h1 {
+            font-size: 2.4rem;
+            font-weight: 500;
+            margin-bottom: 0;
+            letter-spacing: 0.5px;
+        }
+
+        .image-container img {
+            max-width: 70px;
+            height: auto;
+            border-radius: 50%;
+            margin-right: 15px;
+        }
+
+        /* Container */
         .container {
             display: flex;
-            flex-direction: column;
-            margin: 1rem;
-            gap: 1rem;
+            flex: 1;
+            margin: 2rem;
+            border-radius: var(--border-radius);
+            overflow: hidden;
+            box-shadow: var(--shadow);
+            background-color: var(--secondary-color);
         }
 
+        /* Sidebar */
         .sidebar {
+            width: 300px;
             background-color: var(--secondary-color);
-            padding: 1rem;
+            color: var(--text-color);
+            padding: 2rem;
+            display: flex;
+            flex-direction: column;
             border-radius: var(--border-radius);
-            box-shadow: var(--shadow);
         }
 
         .sidebar h2 {
-            font-size: 1.2rem;
-            margin-bottom: 1rem;
-            display: flex;
-            align-items: center;
-            gap: 0.5rem;
+            font-size: 1.4rem;
+            margin-bottom: 1.5rem;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+            color: var(--light-color);
+            font-weight: 500;
         }
 
         .sidebar ul {
             list-style: none;
-            display: grid;
-            gap: 0.5rem;
+            padding: 0;
+            flex: 1;
+        }
+
+        .sidebar li {
+            margin-bottom: 1.2rem;
         }
 
         .sidebar a {
             color: var(--text-color);
             text-decoration: none;
-            padding: 0.8rem;
-            border-radius: var(--border-radius);
             display: flex;
             align-items: center;
-            gap: 0.8rem;
+            padding: 0.8rem;
+            border-radius: var(--border-radius);
             transition: var(--transition);
+            position: relative;
+            overflow: hidden;
+        }
+
+        .sidebar a::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 6px;
+            height: 100%;
+            background-color: var(--accent-color);
+            transform: scaleY(0);
+            transition: transform 0.3s ease-in-out;
+            transform-origin: top;
+        }
+
+        .sidebar a:hover::before {
+            transform: scaleY(1);
         }
 
         .sidebar a:hover {
             background-color: rgba(255, 255, 255, 0.05);
-        }
-
-        .main-content {
-            background-color: var(--secondary-color);
-            padding: 1.5rem;
-            border-radius: var(--border-radius);
-            box-shadow: var(--shadow);
-        }
-
-        #add-survey-btn {
-            background-color: var(--accent-color);
             color: var(--light-color);
-            padding: 0.8rem 1.5rem;
-            border: none;
-            border-radius: var(--border-radius);
-            cursor: pointer;
-            display: flex;
-            align-items: center;
-            gap: 0.5rem;
-            transition: var(--transition);
-        }
-
-        #add-survey-btn:hover {
-            filter: brightness(1.1);
             box-shadow: var(--hover-shadow);
         }
 
+        .sidebar a i {
+            margin-right: 1rem;
+            width: 24px;
+            text-align: center;
+            font-size: 1.2rem;
+        }
+
+        /* Main Content */
+        .main-content {
+            flex: 1;
+            padding: 2rem;
+            background-color: var(--form-bg-color);
+            color: var(--text-color);
+            border-radius: 0 var(--border-radius) var(--border-radius) 0;
+            box-shadow: var(--shadow);
+            overflow-x: auto;
+            min-width: 800px;  /* Ancho mínimo para evitar que se comprima demasiado */
+        }
+
+        /* Add Survey Button */
+        #add-survey-btn {
+            background-color: #4c5861;
+            color: var(--light-color);
+            padding: 1rem 1.75rem;
+            border: none;
+            border-radius: var(--border-radius);
+            cursor: pointer;
+            font-size: 1.2rem;
+            transition: var(--transition);
+            box-shadow: var(--shadow);
+            outline: none;
+            position: relative;
+            overflow: hidden;
+            font-weight: 600;
+            width: auto;
+        }
+
+        #add-survey-btn::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background-color: rgba(0, 0, 0, 0.1);
+            opacity: 0;
+            transition: opacity 0.3s ease-in-out;
+        }
+
+        #add-survey-btn:hover::before {
+            opacity: 1;
+        }
+
+        #add-survey-btn:hover {
+            transform: translateY(-3px);
+            box-shadow: var(--hover-shadow);
+        }
+
+        /* Add Survey Form */
         #add-survey-form {
             display: none;
-            margin-top: 1.5rem;
+            margin-top: 1rem;
+            padding: 2rem;
             background-color: var(--form-bg-color);
-            padding: 1.5rem;
             border-radius: var(--border-radius);
             box-shadow: var(--shadow);
         }
 
         #add-survey-form.active {
-            display: grid;
-            gap: 1rem;
+            display: block;
         }
 
         #add-survey-form label {
+            display: block;
+            margin-bottom: 0.7rem;
             font-weight: 500;
-            margin-bottom: -0.5rem;
+            color: var(--light-color);
+            font-size: 1.1rem;
         }
 
-        #add-survey-form input,
+        #add-survey-form input[type="text"],
         #add-survey-form select,
+        #add-survey-form input[type="datetime-local"],
         #add-survey-form textarea {
             width: 100%;
-            padding: 0.8rem;
-            background-color: #3a3a3a;
+            padding: 1.2rem;
+            margin-bottom: 1.5rem;
             border: 1px solid var(--form-border-color);
             border-radius: var(--border-radius);
-            color: var(--text-color);
             transition: var(--transition);
+            outline: none;
+            background-color: #3a3a3a;
+            color: var(--text-color);
+            font-size: 1.1rem;
         }
 
-        #add-survey-form input:focus,
+        #add-survey-form input[type="text"]:focus,
         #add-survey-form select:focus,
+        #add-survey-form input[type="datetime-local"]:focus,
         #add-survey-form textarea:focus {
-            border-color: var(--accent-color);
-            box-shadow: 0 0 0 3px rgba(33, 150, 243, 0.2);
+            border-color: var(--highlight-color);
+            box-shadow: 0 0 8px rgba(100, 181, 246, 0.7);
         }
 
-        .form-buttons {
-            display: flex;
-            gap: 1rem;
-            margin-top: 1rem;
-            flex-wrap: wrap;
+        #add-survey-form textarea {
+            resize: vertical;
+            min-height: 150px;
         }
 
-        .form-buttons button {
-            flex: 1;
-            padding: 0.8rem;
-            border-radius: var(--border-radius);
+        /* Estilos para los botones del formulario */
+        #add-survey-form button[type="button"] {
+            background-color: #4c5861;
+            color: var(--light-color);
             border: none;
+            padding: 1rem 1.5rem;
+            border-radius: var(--border-radius);
             cursor: pointer;
             transition: var(--transition);
+            margin-top: 1.5rem;
+            box-shadow: var(--shadow);
+            outline: none;
+            font-size: 1.1rem;
+            font-weight: 600;
+            margin-top: auto;
+            margin-inline: 1px;
         }
 
-        #export-btn {
-            background-color: var(--success-color);
-            color: var(--light-color);
+        #add-survey-form button[type="button"]:hover {
+            background-color: #0b5544;
+            transform: translateY(-2px);
+            box-shadow: var(--hover-shadow);
         }
 
-        #cancel-btn {
-            background-color: var(--danger-color);
-            color: var(--light-color);
+        /* Survey Table */
+        #survey-table-container {
+            display: block;
+        }
+
+        #survey-table-container.hidden {
+            display: none;
         }
 
         #survey-table {
             width: 100%;
             border-collapse: collapse;
-            margin-top: 1.5rem;
-            background-color: var(--secondary-color);
+            margin-top: 2rem;
+            border-radius: var(--border-radius);
+            overflow: hidden;
+            box-shadow: var(--shadow);
         }
 
         #survey-table th,
         #survey-table td {
-            padding: 1rem;
+            padding: 1.4rem;
+            border: 1px solid #444;
             text-align: left;
-            border-bottom: 1px solid var(--form-border-color);
+            font-size: 1.1rem;
         }
 
         #survey-table th {
-            background-color: #373737;
-            font-weight: 600;
+            background-color: #444;
+            font-weight: 500;
+            color: var(--light-color);
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
         }
 
-        .pagination {
-            margin-top: 1.5rem;
-            display: flex;
-            justify-content: center;
-            gap: 0.5rem;
-            flex-wrap: wrap;
-        }
-
-        .pagination a {
-            padding: 0.5rem 1rem;
-            background-color: #3a3a3a;
-            border-radius: var(--border-radius);
-            text-decoration: none;
-            transition: var(--transition);
-        }
-
-        .pagination a.active {
-            background-color: var(--accent-color);
-            color: white;
-        }
-
-        #search-input {
-            width: 100%;
-            padding: 0.8rem;
-            margin-bottom: 1.5rem;
-            background-color: #3a3a3a;
-            border: 1px solid var(--form-border-color);
-            border-radius: var(--border-radius);
+        #survey-table td {
             color: var(--text-color);
         }
 
-        @media (min-width: 768px) {
+        /* Responsive */
+        @media (max-width: 768px) {
             .container {
-                flex-direction: row;
-                margin: 2rem;
+                flex-direction: column;
+                margin: 0.5rem;
             }
 
             .sidebar {
-                width: 280px;
-                flex-shrink: 0;
-            }
-
-            .main-content {
-                flex-grow: 1;
-            }
-        }
-
-        @media (max-width: 480px) {
-            .header {
+                width: 100%;
                 padding: 1rem;
             }
 
+            .header {
+                padding: 0.5rem;
+            }
+
+            .header h1 {
+                font-size: 1.2rem;
+            }
+
+            .main-content {
+                padding: 0.5rem;
+                min-width: auto;  /* Permitir que el contenido se ajuste */
+            }
+
             #add-survey-btn {
+                font-size: 0.9rem;
+                padding: 0.6rem 1rem;
                 width: 100%;
-                justify-content: center;
+                margin-bottom: 0.5rem;
+            }
+
+            #survey-table {
+                display: block;
+                overflow-x: auto;
+                white-space: nowrap;  /*  Importante para el scroll horizontal en mobile */
             }
 
             #survey-table th,
             #survey-table td {
-                padding: 0.8rem;
-                font-size: 0.9rem;
+                padding: 0.4rem;
+                font-size: 0.7rem;
             }
 
-            .form-buttons button {
-                width: 100%;
+            .image-container img {
+                max-width: 40px;
             }
         }
 
+        /* Estilos para las notificaciones */
         .notification {
             position: fixed;
-            top: 1rem;
+            top: 20px;
             left: 50%;
             transform: translateX(-50%);
-            padding: 1rem 2rem;
+            padding: 0.7rem 1rem;
             border-radius: var(--border-radius);
-            color: white;
+            box-shadow: var(--shadow);
             z-index: 1000;
             opacity: 0;
-            transition: opacity 0.3s ease;
+            transition: opacity 0.3s ease-in-out, transform 0.3s ease-in-out;
+            transform: translateY(-20px);
+            text-align: center;
+            font-size: 1rem;
         }
 
         .notification.show {
             opacity: 1;
+            transform: translate(-50%, 0);
         }
 
         .notification.success {
             background-color: var(--success-color);
+            color: var(--light-color);
         }
 
         .notification.error {
             background-color: var(--danger-color);
+            color: var(--light-color);
+        }
+
+        .error {
+            color: var(--danger-color);
+            margin-top: 0.3rem;
+            display: block;
+            font-size: 1rem;
+        }
+
+        /* Pagination Styles */
+        .pagination {
+            margin-top: 2rem;
+            text-align: center;
+        }
+
+        .pagination a {
+            color: wheat;
+            padding: 1rem 1.5rem;
+            text-decoration: none;
+            border: 1px solid var(--form-border-color);
+            margin: 0 4px;
+            border-radius: var(--border-radius);
+            transition: var(--transition);
+            display: inline-block;
+            font-size: 1rem;
+        }
+
+        .pagination a.active {
+            background-color: #0b5544;
+            color: var(--light-color);
+            border-color: #0b5544;
+        }
+
+        .pagination a:hover:not(.active) {
+            background-color: var(--highlight-color);
+            color: var(--light-color);
+            box-shadow: var(--hover-shadow);
+        }
+
+        /* Search */
+        .search-container {
+            position: relative;
+            margin: 1rem 0;
+            transition: var(--transition);
+        }
+
+        .search-container.hidden {
+            display: none;
+        }
+
+        #search-input {
+            width: 100%;
+            padding: 0.8rem 2.5rem 0.8rem 1rem;
+            border: 1px solid var(--form-border-color);
+            border-radius: var(--border-radius);
+            background-color: #3a3a3a;
+            color: var(--text-color);
+            font-size: 1.1rem;
+            transition: var(--transition);
+            margin-top: auto;
+        }
+
+        .search-container .fa-search {
+            position: absolute;
+            right: 1rem;
+            top: 50%;
+            transform: translateY(-50%);
+            color: var(--text-color);
+            opacity: 0.7;
+        }
+
+        /* Ajustes para PC */
+        @media (min-width: 769px) {
+            .container {
+                margin: 3rem;
+            }
+
+            .sidebar {
+                width: 350px;
+                padding: 3rem;
+            }
+
+            .header {
+                padding: 2rem 3rem;
+            }
+
+            .header h1 {
+                font-size: 3rem;
+            }
+
+            .main-content {
+                padding: 3rem;
+            }
+
+            #add-survey-btn {
+                font-size: 1.4rem;
+                padding: 1.2rem 2rem;
+            }
+
+            .image-container img {
+                max-width: 90px;
+            }
         }
     </style>
 
