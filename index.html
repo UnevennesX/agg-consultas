@@ -749,6 +749,16 @@
         </div>
     </div>
 
+
+
+
+
+
+
+
+
+
+
     <script>
 
 
@@ -849,50 +859,89 @@ addSurveyBtn.addEventListener('click', () => {
                 .filter(survey => survey.Nombre && survey['Tipo de Survey'] && survey.Fecha);
         }
         // Function to format date from API
-        function formatDateFromAPI(dateString) {
-            if (!dateString) return '';
+    function formatDateFromAPI(dateString) {
+    if (!dateString) {
+        console.warn("Fecha inválida (vacía):", dateString);
+        return 'Fecha inválida';
+    }
 
-            const months = {
-                'Enero': '01', 'Febrero': '02', 'Marzo': '03', 'Abril': '04',
-                'Mayo': '05', 'Junio': '06', 'Julio': '07', 'Agosto': '08',
-                'Septiembre': '09', 'Octubre': '10', 'Noviembre': '11', 'Diciembre': '12'
-            };
-
-            try {
-                const parts = dateString.split(/[.,\s]+/);
-                const day = parts[0].padStart(2, '0');
-                const monthName = parts[1];
-                const year = parts[2];
-                let time = parts[3] || '';
-                let ampm = parts[4] || '';
-
-                const month = months[monthName];
-
-                let hours = 0;
-                let minutes = '00';
-
-                if (time) {
-                    [hours, minutes] = time.split(':');
-                    hours = parseInt(hours);
-                }
-
-                if (ampm) {
-                    if (ampm.toUpperCase() === 'PM' && hours !== 12) {
-                        hours += 12;
-                    } else if (ampm.toUpperCase() === 'AM' && hours === 12) {
-                        hours = 0;
-                    }
-                }
-
-                hours = String(hours).padStart(2, '0');
-                minutes = String(minutes).padStart(2, '0');
-
-                return `${day}/${month}/${year} ${hours}:${minutes}`;
-            } catch (error) {
-                console.error("Error al formatear la fecha:", dateString, error);
+    // Try parsing as ISO 8601 format (e.g., 2025-02-15T02:10)
+    if (dateString.includes('T')) {
+        try {
+            const isoDate = new Date(dateString);
+            if (isNaN(isoDate)) {
+                console.warn("Fecha inválida (ISO 8601):", dateString);
                 return 'Fecha inválida';
             }
+
+            const day = String(isoDate.getDate()).padStart(2, '0');
+            const month = String(isoDate.getMonth() + 1).padStart(2, '0'); // Month is 0-indexed
+            const year = isoDate.getFullYear();
+            const hours = String(isoDate.getHours()).padStart(2, '0');
+            const minutes = String(isoDate.getMinutes()).padStart(2, '0');
+
+            const formattedDate = `${day}/${month}/${year} ${hours}:${minutes}`;
+            console.log("Fecha formateada (ISO 8601):", formattedDate);
+            return formattedDate;
+
+        } catch (error) {
+            console.error("Error al formatear la fecha (ISO 8601):", dateString, error);
+            return 'Fecha inválida';
         }
+    } else {
+        // Try parsing as "12, Febrero, 2025. 6:11 AM" format
+        const months = {
+            'Enero': '01', 'Febrero': '02', 'Marzo': '03', 'Abril': '04',
+            'Mayo': '05', 'Junio': '06', 'Julio': '07', 'Agosto': '08',
+            'Septiembre': '09', 'Octubre': '10', 'Noviembre': '11', 'Diciembre': '12'
+        };
+
+        try {
+            const parts = dateString.split(/[.,\s]+/);
+            console.log("Partes de la fecha:", parts);
+
+            if (parts.length < 4) {
+                console.warn("Fecha inválida (formato incorrecto):", dateString);
+                return 'Fecha inválida';
+            }
+
+            const day = parts[0].padStart(2, '0');
+            const monthName = parts[1];
+            const year = parts[2];
+            let time = parts[3] || '00:00';  // Default to 00:00 if time is missing
+            let ampm = parts[4] || '';       // Default to empty string if AM/PM is missing
+
+            const month = months[monthName];
+
+            if (!month) {
+                console.warn("Mes inválido:", monthName);
+                return 'Fecha inválida';
+            }
+
+            let [hours, minutes] = time.split(':');
+            hours = parseInt(hours);
+            minutes = parseInt(minutes);
+
+            if (ampm && ampm.toUpperCase() === 'PM' && hours !== 12) {
+                hours += 12;
+            } else if (ampm && ampm.toUpperCase() === 'AM' && hours === 12) {
+                hours = 0;
+            }
+
+            hours = String(hours).padStart(2, '0');
+            minutes = String(minutes).padStart(2, '0');
+
+            const formattedDate = `${day}/${month}/${year} ${hours}:${minutes}`;
+            console.log("Fecha formateada:", formattedDate);
+            return formattedDate;
+
+        } catch (error) {
+            console.error("Error al formatear la fecha:", dateString, error);
+            return 'Fecha inválida';
+        }
+    }
+}
+
         // Function to get surveys for the current page
          function getCurrentPageSurveys() {
             const startIndex = (currentPage - 1) * surveysPerPage;
@@ -1142,6 +1191,12 @@ document.getElementById('search-input').addEventListener('input', (e) => {
 });
 
 </script>
+
+
+
+
+
+
 
 
     </body>
