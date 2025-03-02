@@ -202,6 +202,80 @@
         input[type="datetime-local"][readonly] {
             pointer-events: none;  /* Prevent interaction */
         }
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+/* Table Responsiveness */
+#survey-table-container {
+    display: block;
+    overflow-x: auto; /* Enable horizontal scrolling */
+}
+
+#survey-table-container.hidden {
+    display: none;
+}
+
+#survey-table {
+    width: 100%;
+    border-collapse: collapse;
+    margin-top: 2rem;
+    border-radius: var(--border-radius);
+    overflow: hidden;
+    box-shadow: var(--shadow);
+    min-width: 600px; /* Minimum width to prevent collapsing */
+}
+
+#survey-table th,
+#survey-table td {
+    padding: 1.4rem;
+    border: 1px solid #444;
+    text-align: left;
+    white-space: nowrap; /* Prevent text wrapping */
+}
+
+@media (max-width: 600px) {
+    #survey-table {
+        font-size: 0.9rem; /* Smaller font size */
+    }
+
+    #survey-table th,
+    #survey-table td {
+        padding: 0.8rem; /* Reduced padding */
+    }
+}
+
+/* Further improvements for mobile screens */
+@media (max-width: 480px) {
+    #survey-table {
+        font-size: 0.8rem;
+    }
+
+    #survey-table th,
+    #survey-table td {
+        padding: 0.6rem; /* Even smaller padding */
+    }
+}
+
+
+
+
+        
     </style>
 </head>
 <body>
